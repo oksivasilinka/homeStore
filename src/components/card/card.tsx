@@ -15,11 +15,11 @@ type Product = {
   price: number
 }
 
-type CardProductProps = {
+type Props = {
   product: Product
 }
 
-export const CardProducts = ({ product }: CardProductProps) => {
+export const CardProducts = ({ product }: Props) => {
   const { description, name, photo, price } = product
 
   return (
