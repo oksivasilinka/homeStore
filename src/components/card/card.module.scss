@@ -1,0 +1,15 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: 300px;
+  height: 350px;
+  padding: 10px;
+
+  .image {
+    width: 180px;
+    height: 150px;
+    margin: 0 auto;
+  }
+}
