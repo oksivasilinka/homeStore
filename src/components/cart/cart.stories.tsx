@@ -62,5 +62,6 @@ export const CartStory: Story = {
         price: 859,
       },
     ],
+    total: 1300,
   },
 }

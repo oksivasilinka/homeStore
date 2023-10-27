@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { Auth } from '@/components/auth'
+import { Cart } from '@/components/cart'
 import { Header } from '@/components/header'
 import { ProductCardsList } from '@/components/productCardsList'
 import { auth, db } from '@/config/firebase'
@@ -9,7 +10,7 @@ import { collection, getDocs } from 'firebase/firestore'
 
 export function App() {
   const [products, setProducts] = useState<any[]>([])
-  const total = 1500
+  const total: number = 1500
 
   const productsCollectionRef = collection(db, 'product')
 
@@ -37,6 +38,7 @@ export function App() {
       <Container>
         <Auth />
         <ProductCardsList products={products} />
+        <Cart products={products} total={total} />
       </Container>
     </div>
   )
