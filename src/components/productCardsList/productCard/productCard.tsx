@@ -5,9 +5,9 @@ import CardMedia from '@mui/material/CardMedia'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 
-import s from './card.module.scss'
+import s from './productCard.module.scss'
 
-type Product = {
+export type Product = {
   description: string
   id: string
   name: string
@@ -19,7 +19,7 @@ type Props = {
   product: Product
 }
 
-export const CardProducts = ({ product }: Props) => {
+export const ProductCard = ({ product }: Props) => {
   const { description, name, photo, price } = product
 
   return (

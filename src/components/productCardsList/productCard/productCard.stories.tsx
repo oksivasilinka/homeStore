@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { CardProducts } from './card'
+import { ProductCard } from './productCard'
 
 const meta = {
-  component: CardProducts,
+  component: ProductCard,
   tags: ['autodocs'],
-  title: 'Components/CardProducts',
-} satisfies Meta<typeof CardProducts>
+  title: 'Components/ProductCard',
+} satisfies Meta<typeof ProductCard>
 
 export default meta
 type Story = StoryObj<typeof meta>
-export const CardProductsStory: Story = {
+export const ProductCardStory: Story = {
   args: {
     product: {
       description: 'Очень модный желтый диван. Из самой новой коллекции',
