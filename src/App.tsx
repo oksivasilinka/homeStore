@@ -9,6 +9,7 @@ import { collection, getDocs } from 'firebase/firestore'
 
 export function App() {
   const [products, setProducts] = useState<any[]>([])
+  const total = 1500
 
   const productsCollectionRef = collection(db, 'product')
 
@@ -31,7 +32,7 @@ export function App() {
 
   return (
     <div>
-      <Header total={0} />
+      <Header total={total} />
 
       <Container>
         <Auth />

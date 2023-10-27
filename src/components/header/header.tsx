@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography'
 import s from './header.module.scss'
 
 type Props = {
-  total: number
+  total?: number
 }
 
 export const Header = ({ total }: Props) => {
@@ -25,14 +25,16 @@ export const Header = ({ total }: Props) => {
           </Typography>
 
           <>
-            <Typography
-              align={'center'}
-              component={'label'}
-              sx={{ flexGrow: 1 }}
-              variant={'subtitle1'}
-            >
-              {total} руб.
-            </Typography>
+            {total && (
+              <Typography
+                align={'center'}
+                component={'label'}
+                sx={{ flexGrow: 1 }}
+                variant={'subtitle1'}
+              >
+                {total} руб.
+              </Typography>
+            )}
             <Button
               className={s.button}
               color={'inherit'}
