@@ -14,37 +14,27 @@ type Props = {
 
 export const Header = ({ total }: Props) => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar className={s.appBar} color={'secondary'} position={'static'}>
-        <Toolbar>
+    <Box>
+      <AppBar color={'secondary'} position={'fixed'}>
+        <Toolbar className={s.toolbar}>
           <NavLink to={'/'}>
-            <Typography
-              className={s.labelButton}
-              component={'button'}
-              sx={{ flexGrow: 22 }}
-              variant={'h6'}
-            >
+            <Button className={s.labelButton} component={'button'} variant={'text'}>
               Online-store
-            </Typography>
+            </Button>
           </NavLink>
 
-          <>
+          <Box className={s.wrapper}>
             {total && (
-              <Typography
-                align={'center'}
-                component={'label'}
-                sx={{ flexGrow: 1 }}
-                variant={'subtitle1'}
-              >
+              <Typography className={s.total} component={'label'} variant={'subtitle1'}>
                 {total} руб.
               </Typography>
             )}
             <NavLink to={'/cart'}>
-              <Button className={s.button} sx={{ flexGrow: 1 }} variant={'contained'}>
+              <Button variant={'contained'}>
                 <Typography>В корзину</Typography>
               </Button>
             </NavLink>
-          </>
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>
