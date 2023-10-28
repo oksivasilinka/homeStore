@@ -6,6 +6,8 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
+import s from './cart.module.scss'
+
 type Props = {
   products: Product[]
   total?: number
@@ -14,22 +16,18 @@ type Props = {
 export const Cart = ({ products, total }: Props) => {
   return (
     <>
-      <Box sx={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <Box className={s.wrapper}>
+        <Box className={s.wrapperProducts}>
           {products.map(p => (
             <ProductCardInCart key={p.id} product={p} />
           ))}
+          <div className={s.total}>
+            <Typography variant={'h5'}>Итого {total || 0} руб.</Typography>
+          </div>
         </Box>
+
         <Box>
-          <Card
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '20px',
-              padding: '10px',
-              width: '300px',
-            }}
-          >
+          <Card className={s.form}>
             <TextField placeholder={'name'} size={'small'} />
             <TextField placeholder={'surname'} size={'small'} />
             <TextField placeholder={'address'} size={'small'} />
@@ -37,7 +35,6 @@ export const Cart = ({ products, total }: Props) => {
           </Card>
         </Box>
       </Box>
-      <Typography variant={'h5'}>Итого {total || 0} руб.</Typography>
     </>
   )
 }

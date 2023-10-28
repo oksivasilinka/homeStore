@@ -6,6 +6,8 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 
+import s from './productCardInCart.module.scss'
+
 type Props = {
   product: Product
 }
@@ -13,7 +15,7 @@ export const ProductCardInCart = ({ product }: Props) => {
   const { description, name, photo, price } = product
 
   return (
-    <Card sx={{ display: 'flex' }}>
+    <Card className={s.wrapper}>
       <CardMedia component={'img'} image={photo} sx={{ width: 200 }} title={name} />
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <CardContent>
