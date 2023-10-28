@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router-dom'
+
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -13,16 +15,18 @@ type Props = {
 export const Header = ({ total }: Props) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position={'static'}>
+      <AppBar className={s.appBar} color={'secondary'} position={'static'}>
         <Toolbar>
-          <Typography
-            className={s.labelButton}
-            component={'button'}
-            sx={{ flexGrow: 22 }}
-            variant={'h6'}
-          >
-            Online-store
-          </Typography>
+          <NavLink to={'/'}>
+            <Typography
+              className={s.labelButton}
+              component={'button'}
+              sx={{ flexGrow: 22 }}
+              variant={'h6'}
+            >
+              Online-store
+            </Typography>
+          </NavLink>
 
           <>
             {total && (
@@ -35,14 +39,11 @@ export const Header = ({ total }: Props) => {
                 {total} руб.
               </Typography>
             )}
-            <Button
-              className={s.button}
-              color={'inherit'}
-              sx={{ flexGrow: 1 }}
-              variant={'outlined'}
-            >
-              <Typography>В корзину</Typography>
-            </Button>
+            <NavLink to={'/cart'}>
+              <Button className={s.button} sx={{ flexGrow: 1 }} variant={'contained'}>
+                <Typography>В корзину</Typography>
+              </Button>
+            </NavLink>
           </>
         </Toolbar>
       </AppBar>

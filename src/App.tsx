@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Route, Routes } from 'react-router-dom'
 
 import { Auth } from '@/components/auth'
 import { Cart } from '@/components/cart'
@@ -6,7 +7,19 @@ import { Header } from '@/components/header'
 import { ProductCardsList } from '@/components/productCardsList'
 import { auth, db } from '@/config/firebase'
 import { Container } from '@mui/material'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { collection, getDocs } from 'firebase/firestore'
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#442c2e',
+    },
+    secondary: {
+      main: '#fedbd0',
+    },
+  },
+})
 
 export function App() {
   const [products, setProducts] = useState<any[]>([])
@@ -32,14 +45,15 @@ export function App() {
   console.log(auth.currentUser?.email)
 
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <Header total={total} />
-
       <Container>
-        <Auth />
-        <ProductCardsList products={products} />
-        <Cart products={products} total={total} />
+        <Routes>
+          <Route element={<ProductCardsList products={products} />} path={'/'} />
+          <Route element={<Auth />} path={'/login'} />
+          <Route element={<Cart products={products} total={total} />} path={'/cart'} />
+        </Routes>
       </Container>
-    </div>
+    </ThemeProvider>
   )
 }

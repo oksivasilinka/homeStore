@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from 'react'
+import { NavLink } from 'react-router-dom'
 
 import { auth } from '@/config/firebase'
 import Button from '@mui/material/Button'
@@ -34,9 +35,11 @@ export const Auth = () => {
         size={'small'}
         type={'password'}
       />
-      <Button onClick={signInHandler} variant={'contained'}>
-        Sign In
-      </Button>
+      <NavLink to={'/'}>
+        <Button onClick={signInHandler} variant={'contained'}>
+          Sign In
+        </Button>
+      </NavLink>
     </div>
   )
 }
