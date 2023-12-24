@@ -10,11 +10,7 @@ import Typography from '@mui/material/Typography'
 
 import s from './header.module.scss'
 
-type Props = {
-  total?: number
-}
-
-export const Header = ({ total }: Props) => {
+export const Header = () => {
   const cart = useSelector((state: AppRootState) => state.cart)
 
   const totalSum = cart.map(el => el.price).reduce((a, b) => a + b, 0)
@@ -30,7 +26,7 @@ export const Header = ({ total }: Props) => {
           </NavLink>
 
           <Box className={s.wrapper}>
-            {total && (
+            {totalSum && (
               <Typography className={s.total} component={'label'} variant={'subtitle1'}>
                 {totalSum} руб.
               </Typography>

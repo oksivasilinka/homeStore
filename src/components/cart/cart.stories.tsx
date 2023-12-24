@@ -12,7 +12,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 export const CartStory: Story = {
   args: {
-    products: [
+    cart: [
       {
         description: 'Комфортное кресло благородного серого цвета',
         id: '1',
@@ -62,6 +62,5 @@ export const CartStory: Story = {
         price: 859,
       },
     ],
-    total: 1300,
   },
 }

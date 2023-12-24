@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 import { addProductInCart } from '@/services/slice'
@@ -26,6 +27,10 @@ export const ProductCard = ({ product }: Props) => {
   const { description, name, photo, price } = product
   const cart = useSelector((state: AppRootState) => state.cart)
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart))
+  }, [cart])
 
   const addProductHandler = () => {
     dispatch(addProductInCart({ product }))

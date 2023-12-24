@@ -9,20 +9,21 @@ import Typography from '@mui/material/Typography'
 import s from './cart.module.scss'
 
 type Props = {
-  products: Product[]
-  total?: number
+  cart: Product[]
 }
 
-export const Cart = ({ products, total }: Props) => {
+export const Cart = ({ cart }: Props) => {
+  const totalSum = cart.map(el => el.price).reduce((a, b) => a + b, 0)
+
   return (
     <>
       <Box className={s.wrapper}>
         <Box className={s.wrapperProducts}>
-          {products.map(p => (
+          {cart.map(p => (
             <ProductCardInCart key={p.id} product={p} />
           ))}
           <div className={s.total}>
-            <Typography variant={'h5'}>Итого {total || 0} руб.</Typography>
+            <Typography variant={'h5'}>Итого {totalSum || 0} руб.</Typography>
           </div>
         </Box>
 
