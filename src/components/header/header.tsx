@@ -1,5 +1,7 @@
+import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
+import { AppRootState } from '@/services/store'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -13,6 +15,10 @@ type Props = {
 }
 
 export const Header = ({ total }: Props) => {
+  const cart = useSelector((state: AppRootState) => state.cart)
+
+  const totalSum = cart.map(el => el.price).reduce((a, b) => a + b, 0)
+
   return (
     <Box>
       <AppBar color={'secondary'} position={'fixed'}>
@@ -26,7 +32,7 @@ export const Header = ({ total }: Props) => {
           <Box className={s.wrapper}>
             {total && (
               <Typography className={s.total} component={'label'} variant={'subtitle1'}>
-                {total} руб.
+                {totalSum} руб.
               </Typography>
             )}
             <NavLink to={'/cart'}>

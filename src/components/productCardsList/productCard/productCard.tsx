@@ -1,3 +1,7 @@
+import { useSelector } from 'react-redux'
+
+import { addProductInCart } from '@/services/slice'
+import { AppRootState, useAppDispatch } from '@/services/store'
 import { Card } from '@mui/material'
 import Button from '@mui/material/Button'
 import CardMedia from '@mui/material/CardMedia'
@@ -20,6 +24,13 @@ type Props = {
 
 export const ProductCard = ({ product }: Props) => {
   const { description, name, photo, price } = product
+  const cart = useSelector((state: AppRootState) => state.cart)
+  const dispatch = useAppDispatch()
+
+  const addProductHandler = () => {
+    dispatch(addProductInCart({ product }))
+    console.log(cart)
+  }
 
   return (
     <Paper className={s.card} elevation={3}>
@@ -38,7 +49,9 @@ export const ProductCard = ({ product }: Props) => {
           <Typography className={s.price} variant={'h6'}>
             Цена {price} руб.
           </Typography>
-          <Button variant={'contained'}>Купить</Button>
+          <Button onClick={addProductHandler} variant={'contained'}>
+            В корзину
+          </Button>
         </>
       </Card>
     </Paper>
