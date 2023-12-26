@@ -26,7 +26,7 @@ export const Header = () => {
           </NavLink>
 
           <Box className={s.wrapper}>
-            {totalSum && (
+            {!!totalSum && (
               <Typography className={s.total} component={'label'} variant={'subtitle1'}>
                 {totalSum} руб.
               </Typography>
