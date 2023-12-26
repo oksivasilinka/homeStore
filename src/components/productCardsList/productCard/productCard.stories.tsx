@@ -19,6 +19,8 @@ export const ProductCardStory: Story = {
       photo:
         'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTIfwXeUDy8Y_EUi8qQBrZAuSIz38EoKXVSoUUUM5dsC7k66BdnsFE0-qM7nHCt_tv5UdISqadirbax3OEn67Tga5IvKxwMcljcJyl9R3JdQBfICxuY-KQDvDBPVYpOmKWXeIz-_Q&usqp=CAc',
       price: 859,
+      totalCount: 1,
+      totalSum: 859,
     },
   },
 }

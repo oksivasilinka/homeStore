@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
-import { addProductInCart } from '@/services/slice'
+import { ProductInCart, addProductInCart } from '@/services/slice'
 import { AppRootState, useAppDispatch } from '@/services/store'
 import { Card } from '@mui/material'
 import Button from '@mui/material/Button'
@@ -11,16 +11,8 @@ import Typography from '@mui/material/Typography'
 
 import s from './productCard.module.scss'
 
-export type Product = {
-  description: string
-  id: string
-  name: string
-  photo: string
-  price: number
-}
-
 type Props = {
-  product: Product
+  product: ProductInCart
 }
 
 export const ProductCard = ({ product }: Props) => {

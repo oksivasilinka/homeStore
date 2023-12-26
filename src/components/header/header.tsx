@@ -13,7 +13,7 @@ import s from './header.module.scss'
 export const Header = () => {
   const cart = useSelector((state: AppRootState) => state.cart)
 
-  const totalSum = cart.map(el => el.price).reduce((a, b) => a + b, 0)
+  const totalSum = cart.map(el => el.totalSum).reduce((a, b) => a + b, 0)
 
   return (
     <Box>

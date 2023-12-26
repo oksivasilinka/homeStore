@@ -7,8 +7,8 @@ import { Cart } from '@/components/cart'
 import { Header } from '@/components/header'
 import { ProductCardsList } from '@/components/productCardsList'
 import { auth, db } from '@/config/firebase'
-import { setCart } from '@/services/slice.ts'
-import { AppRootState, useAppDispatch } from '@/services/store.ts'
+import { setCart } from '@/services/slice'
+import { AppRootState, useAppDispatch } from '@/services/store'
 import { Container } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { collection, getDocs } from 'firebase/firestore'
@@ -44,7 +44,7 @@ export function App() {
     }
 
     getProducts()
-  }, [])
+  }, [productsCollectionRef])
 
   useEffect(() => {
     const valueString = localStorage.getItem('cart')

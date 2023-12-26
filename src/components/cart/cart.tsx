@@ -1,5 +1,5 @@
-import { Product } from '@/components/productCardsList/productCard'
 import { ProductCardInCart } from '@/components/productInCart'
+import { ProductInCart } from '@/services/slice'
 import { Card } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -9,11 +9,11 @@ import Typography from '@mui/material/Typography'
 import s from './cart.module.scss'
 
 type Props = {
-  cart: Product[]
+  cart: ProductInCart[]
 }
 
 export const Cart = ({ cart }: Props) => {
-  const totalSum = cart.map(el => el.price).reduce((a, b) => a + b, 0)
+  const totalSum = cart.map(el => el.totalSum).reduce((a, b) => a + b, 0)
 
   return (
     <>
