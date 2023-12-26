@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router-dom'
+
 import { ProductCardInCart } from '@/components/productInCart'
 import { ProductInCart } from '@/services/slice'
 import { Card } from '@mui/material'
@@ -18,23 +20,35 @@ export const Cart = ({ cart }: Props) => {
   return (
     <>
       <Box className={s.wrapper}>
-        <Box className={s.wrapperProducts}>
-          {cart.map(p => (
-            <ProductCardInCart key={p.id} product={p} />
-          ))}
-          <div className={s.total}>
-            <Typography variant={'h5'}>Итого {totalSum || 0} руб.</Typography>
-          </div>
-        </Box>
+        {!!totalSum && (
+          <>
+            <Box className={s.wrapperProducts}>
+              {cart.map(p => (
+                <ProductCardInCart key={p.id} product={p} />
+              ))}
+              <div className={s.total}>
+                <Typography variant={'h5'}>Итого {totalSum || 0} руб.</Typography>
+              </div>
+            </Box>
 
-        <Box>
-          <Card className={s.form}>
-            <TextField placeholder={'name'} size={'small'} />
-            <TextField placeholder={'surname'} size={'small'} />
-            <TextField placeholder={'address'} size={'small'} />
-            <Button variant={'contained'}>Купить</Button>
-          </Card>
-        </Box>
+            <Box>
+              <Card className={s.form}>
+                <TextField placeholder={'name'} size={'small'} />
+                <TextField placeholder={'surname'} size={'small'} />
+                <TextField placeholder={'address'} size={'small'} />
+                <Button variant={'contained'}>Купить</Button>
+              </Card>
+            </Box>
+          </>
+        )}
+        {!totalSum && (
+          <Box className={s.emptyCart}>
+            <Typography variant={'h6'}>Ваша корзина пуста</Typography>
+            <NavLink to={'/'}>
+              <Typography variant={'body2'}>Вернуться в каталог</Typography>
+            </NavLink>
+          </Box>
+        )}
       </Box>
     </>
   )

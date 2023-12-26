@@ -44,7 +44,7 @@ export function App() {
     }
 
     getProducts()
-  }, [productsCollectionRef])
+  }, [])
 
   useEffect(() => {
     const valueString = localStorage.getItem('cart')

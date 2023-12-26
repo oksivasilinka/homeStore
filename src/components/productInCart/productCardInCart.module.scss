@@ -1,10 +1,30 @@
 .wrapper {
   display: flex;
+  height: 180px;
+}
+
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.productInfo {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .buttonWrapper {
   display: flex;
   gap: 10px;
+  align-items: flex-start;
+  padding: 16px;
+
+  button:not(:first-of-type) {
+    margin: 0;
+  }
 }
 
 .input {
