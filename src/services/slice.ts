@@ -21,6 +21,21 @@ const slice = createSlice({
         })
       }
     },
+    deleteProductInCart: (state, action: PayloadAction<{ product: ProductInCart }>) => {
+      const index = state.findIndex(el => el.id === action.payload.product.id)
+
+      if (index !== -1) {
+        if (state[index].totalCount > 1) {
+          state[index] = {
+            ...state[index],
+            totalCount: state[index].totalCount - 1,
+            totalSum: state[index].totalSum - action.payload.product.price,
+          }
+        } else {
+          state.splice(index, 1)
+        }
+      }
+    },
     setCart: (_, action: PayloadAction<{ product: ProductInCart }>) => {
       action.payload.product
     },
@@ -28,7 +43,7 @@ const slice = createSlice({
 })
 
 export const cartSlice = slice.reducer
-export const { addProductInCart, setCart } = slice.actions
+export const { addProductInCart, deleteProductInCart, setCart } = slice.actions
 export type ProductInCart = {
   description: string
   id: string

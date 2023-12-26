@@ -1,4 +1,5 @@
-import { ProductInCart } from '@/services/slice'
+import { ProductInCart, addProductInCart, deleteProductInCart } from '@/services/slice'
+import { useAppDispatch } from '@/services/store'
 import { Card, CardActions } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -14,6 +15,17 @@ type Props = {
 }
 export const ProductCardInCart = ({ product }: Props) => {
   const { name, photo, price, totalCount, totalSum } = product
+  const dispatch = useAppDispatch()
+
+  const productCount = totalCount
+
+  const addProductHandler = () => {
+    dispatch(addProductInCart({ product }))
+  }
+
+  const deleteProductHandler = () => {
+    dispatch(deleteProductInCart({ product }))
+  }
 
   return (
     <Card className={s.wrapper}>
@@ -27,11 +39,21 @@ export const ProductCardInCart = ({ product }: Props) => {
         </CardContent>
         <CardActions>
           <Box className={s.buttonWrapper}>
-            <Button className={s.button} size={'small'} variant={'outlined'}>
+            <Button
+              className={s.button}
+              onClick={deleteProductHandler}
+              size={'small'}
+              variant={'outlined'}
+            >
               -
             </Button>
-            <TextField className={s.input} defaultValue={totalCount} size={'small'} />
-            <Button className={s.button} size={'small'} variant={'outlined'}>
+            <TextField className={s.input} size={'small'} value={productCount} />
+            <Button
+              className={s.button}
+              onClick={addProductHandler}
+              size={'small'}
+              variant={'outlined'}
+            >
               +
             </Button>
           </Box>
