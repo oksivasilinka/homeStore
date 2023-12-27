@@ -33,7 +33,7 @@ export const Header = () => {
             )}
             <NavLink to={'/cart'}>
               <Button variant={'contained'}>
-                <Typography>В корзину</Typography>
+                <Typography>Корзина</Typography>
               </Button>
             </NavLink>
           </Box>

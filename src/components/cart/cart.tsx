@@ -1,11 +1,9 @@
 import { NavLink } from 'react-router-dom'
 
+import { CartForm } from '@/components/cart/cartForm'
 import { ProductCardInCart } from '@/components/productInCart'
 import { ProductInCart } from '@/services/slice'
-import { Card } from '@mui/material'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
 import s from './cart.module.scss'
@@ -19,6 +17,9 @@ export const Cart = ({ cart }: Props) => {
 
   return (
     <>
+      <Typography className={s.title} variant={'h4'}>
+        Корзина
+      </Typography>
       <Box className={s.wrapper}>
         {!!totalSum && (
           <>
@@ -26,18 +27,13 @@ export const Cart = ({ cart }: Props) => {
               {cart.map(p => (
                 <ProductCardInCart key={p.id} product={p} />
               ))}
-              <div className={s.total}>
+              <>
                 <Typography variant={'h5'}>Итого {totalSum || 0} руб.</Typography>
-              </div>
+              </>
             </Box>
 
             <Box>
-              <Card className={s.form}>
-                <TextField placeholder={'name'} size={'small'} />
-                <TextField placeholder={'surname'} size={'small'} />
-                <TextField placeholder={'address'} size={'small'} />
-                <Button variant={'contained'}>Купить</Button>
-              </Card>
+              <CartForm />
             </Box>
           </>
         )}
