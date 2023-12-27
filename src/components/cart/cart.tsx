@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom'
 
 import { CartForm } from '@/components/cart/cartForm'
 import { ProductCardInCart } from '@/components/productInCart'
-import { ProductInCart } from '@/services/slice'
+import { ProductInCart } from '@/services'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 

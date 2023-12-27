@@ -1,8 +1,7 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
-import { ProductInCart, addProductInCart } from '@/services/slice'
-import { AppRootState, useAppDispatch } from '@/services/store'
+import { AppRootState, ProductInCart, addProductInCart, useAppDispatch } from '@/services'
 import { Card } from '@mui/material'
 import Button from '@mui/material/Button'
 import CardMedia from '@mui/material/CardMedia'

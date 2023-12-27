@@ -1,3 +1,4 @@
+import { ProductInCart } from '@/services'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const slice = createSlice({
@@ -44,12 +45,3 @@ const slice = createSlice({
 
 export const cartSlice = slice.reducer
 export const { addProductInCart, deleteProductInCart, setCart } = slice.actions
-export type ProductInCart = {
-  description: string
-  id: string
-  name: string
-  photo: string
-  price: number
-  totalCount: number
-  totalSum: number
-}

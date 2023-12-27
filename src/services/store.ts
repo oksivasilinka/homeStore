@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux'
 
-import { cartSlice } from '@/services/slice'
+import { cartSlice } from '@/services'
 import { configureStore } from '@reduxjs/toolkit'
 
 let preloadedState

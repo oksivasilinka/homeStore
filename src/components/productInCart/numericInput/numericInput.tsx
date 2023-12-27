@@ -1,5 +1,4 @@
-import { ProductInCart, addProductInCart, deleteProductInCart } from '@/services/slice.ts'
-import { useAppDispatch } from '@/services/store.ts'
+import { ProductInCart, addProductInCart, deleteProductInCart, useAppDispatch } from '@/services'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import { IconButton } from '@mui/material'

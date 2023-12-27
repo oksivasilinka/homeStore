@@ -1,35 +1,20 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 
+import { CartFormData, formSchema } from '@/services'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Card } from '@mui/material'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import { object, string } from 'yup'
 
 import s from './cartForm.module.scss'
-
-type Data = {
-  email: string
-  name: string
-  phone: string
-}
-
-const phoneRegExp =
-  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
-
-const formSchema = object({
-  email: string().required().email().min(10).max(30),
-  name: string().required().min(3).max(30),
-  phone: string().matches(phoneRegExp, 'Phone number is not valid').required(),
-})
 
 export const CartForm = () => {
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<Data>({
+  } = useForm<CartFormData>({
     defaultValues: {
       email: '',
       name: '',
@@ -38,7 +23,7 @@ export const CartForm = () => {
     resolver: yupResolver(formSchema),
   })
 
-  const onSubmit: SubmitHandler<Data> = async (data: Data) => {
+  const onSubmit: SubmitHandler<CartFormData> = async (data: CartFormData) => {
     try {
       console.log(data)
     } catch (e) {

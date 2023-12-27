@@ -1,5 +1,5 @@
 import { ProductCard } from '@/components/productCardsList/productCard'
-import { ProductInCart } from '@/services/slice'
+import { ProductInCart } from '@/services'
 import { Pagination } from '@mui/material'
 
 import s from './productCardsList.module.scss'
