@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
 
@@ -5,7 +6,8 @@ import { Auth } from '@/components/auth'
 import { Cart } from '@/components/cart'
 import { Header } from '@/components/header'
 import { ProductCardsList } from '@/components/productCardsList'
-import { AppRootState } from '@/services/store'
+import { setCart } from '@/services'
+import { AppRootState, useAppDispatch } from '@/services/store'
 import { Container } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 
@@ -22,6 +24,17 @@ const theme = createTheme({
 
 export function App() {
   const cart = useSelector((state: AppRootState) => state.cart)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    const valueString = localStorage.getItem('cart')
+
+    if (valueString) {
+      const newValue = JSON.parse(valueString)
+
+      dispatch(setCart(newValue))
+    }
+  }, [dispatch, cart])
 
   return (
     <ThemeProvider theme={theme}>

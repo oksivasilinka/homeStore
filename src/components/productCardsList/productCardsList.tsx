@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 import { ProductCard } from '@/components/productCardsList/productCard'
-import { AppRootState, getProducts, setCart, setCurrentPage, useAppDispatch } from '@/services'
+import { AppRootState, getProducts, setCurrentPage, useAppDispatch } from '@/services'
 import { Pagination } from '@mui/material'
 
 import s from './productCardsList.module.scss'
@@ -13,22 +13,14 @@ export const ProductCardsList = () => {
   const currentPage = useSelector((state: AppRootState) => state.products.currentPage)
   const dispatch = useAppDispatch()
 
+  const pageSize = 10
+
   useEffect(() => {
-    dispatch(getProducts(currentPage))
+    dispatch(getProducts(currentPage, pageSize))
   }, [dispatch, currentPage])
 
-  useEffect(() => {
-    const valueString = localStorage.getItem('cart')
-
-    if (valueString) {
-      const newValue = JSON.parse(valueString)
-
-      dispatch(setCart(newValue))
-    }
-  }, [dispatch])
-
   if (!products) {
-    return null // or display a loading indicator/error message
+    return null
   }
 
   return (
@@ -42,7 +34,7 @@ export const ProductCardsList = () => {
       />
       <div className={s.products}>
         {products.map(p => (
-          <ProductCard key={p.name} product={p} />
+          <ProductCard key={p.id} product={p} />
         ))}
       </div>
     </div>

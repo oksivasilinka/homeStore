@@ -25,7 +25,7 @@ export const Cart = ({ cart }: Props) => {
           <>
             <Box className={s.wrapperProducts}>
               {cart.map(p => (
-                <ProductCardInCart key={p.id} product={p} />
+                <ProductCardInCart key={p.name} product={p} />
               ))}
               <>
                 <Typography variant={'h5'}>Итого {totalSum || 0} руб.</Typography>
