@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux'
 
-import { cartSlice } from '@/services'
+import { cartSlice, productsSlice } from '@/services'
 import { configureStore } from '@reduxjs/toolkit'
 
 let preloadedState
@@ -14,6 +14,7 @@ export const store = configureStore({
   preloadedState,
   reducer: {
     cart: cartSlice,
+    products: productsSlice,
   },
 })
 

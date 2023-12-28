@@ -25,7 +25,6 @@ export const ProductCard = ({ product }: Props) => {
 
   const addProductHandler = () => {
     dispatch(addProductInCart({ product }))
-    console.log(cart)
   }
 
   return (
