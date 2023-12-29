@@ -37,7 +37,7 @@ export const Auth = () => {
       />
       <NavLink to={'/'}>
         <Button onClick={signInHandler} variant={'contained'}>
-          Sign In
+          Войти
         </Button>
       </NavLink>
     </div>
