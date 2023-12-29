@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Cart } from '@/components/cart/cart'
+import { Cart } from '@/components/cart'
 
 const meta = {
   component: Cart,

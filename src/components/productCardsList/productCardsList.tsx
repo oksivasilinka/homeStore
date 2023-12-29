@@ -1,15 +1,14 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
-import { CategoryFilter } from '@/components/productCardsList/categoryFilter'
-import { ProductCard } from '@/components/productCardsList/productCard'
+import { CategoryFilter, ProductCard } from '@/components/productCardsList'
 import { getProducts, setCurrentPage, useAppDispatch } from '@/services'
 import {
   currentPageSelector,
   filterSelector,
   pageCountSelector,
   productsSelector,
-} from '@/services/products/productsSelectors.ts'
+} from '@/services/products'
 import { Pagination } from '@mui/material'
 import Typography from '@mui/material/Typography'
 

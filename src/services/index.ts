@@ -1,5 +1,5 @@
 export * from './validation'
-export * from './cartSlice'
-export * from './productsSlice'
+export * from './cart'
+export * from './products'
 export * from './store'
 export * from './types'
