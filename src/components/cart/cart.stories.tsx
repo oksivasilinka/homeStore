@@ -14,6 +14,7 @@ export const CartStory: Story = {
   args: {
     cart: [
       {
+        category: 'cushioned',
         description: 'Комфортное кресло благородного серого цвета',
         id: '1',
         name: 'Кресло серое',
@@ -24,6 +25,7 @@ export const CartStory: Story = {
         totalSum: 859,
       },
       {
+        category: 'cushioned',
         description: 'Очень модный желтый диван. Из самой новой коллекции',
         id: '2',
         name: 'Диван желтый',
@@ -31,9 +33,11 @@ export const CartStory: Story = {
           'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTIfwXeUDy8Y_EUi8qQBrZAuSIz38EoKXVSoUUUM5dsC7k66BdnsFE0-qM7nHCt_tv5UdISqadirbax3OEn67Tga5IvKxwMcljcJyl9R3JdQBfICxuY-KQDvDBPVYpOmKWXeIz-_Q&usqp=CAc',
         price: 548,
         totalCount: 1,
+
         totalSum: 548,
       },
       {
+        category: 'cushioned',
         description: 'Уютное кресло из новой коллекции для практически любого интерьера ',
         id: '3',
         name: 'Кресло бежевое',
@@ -44,6 +48,7 @@ export const CartStory: Story = {
         totalSum: 684,
       },
       {
+        category: 'cushioned',
         description: 'Отличный диван для современного интерьера',
         id: '4',
         name: 'Диван серый',
@@ -54,6 +59,7 @@ export const CartStory: Story = {
         totalSum: 795,
       },
       {
+        category: 'cabinet',
         description: 'Белый напольный вместительный стелаж на деревянных ножках',
         id: '5',
         name: 'Стеллаж белый',
@@ -64,6 +70,7 @@ export const CartStory: Story = {
         totalSum: 385,
       },
       {
+        category: 'cushioned',
         description: 'Оригинальное кресло в натуральных оттенках',
         id: '6',
         name: 'Кресло бежевое 2',

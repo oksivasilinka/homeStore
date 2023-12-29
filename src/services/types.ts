@@ -1,4 +1,5 @@
 export type ProductInCart = {
+  category: Category
   description: string
   id: string
   name: string
@@ -13,3 +14,5 @@ export type CartFormData = {
   name: string
   phone: string
 }
+
+export type Category = 'cabinet' | 'cushioned'

@@ -1,42 +1,75 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { ProductCard } from '@/components/productCardsList/productCard'
-import { AppRootState, getProducts, setCurrentPage, useAppDispatch } from '@/services'
-import { Pagination } from '@mui/material'
+import { AppRootState, Category, getProducts, setCurrentPage, useAppDispatch } from '@/services'
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Pagination,
+  Select,
+  SelectChangeEvent,
+} from '@mui/material'
+import Typography from '@mui/material/Typography'
 
 import s from './productCardsList.module.scss'
 
-export const ProductCardsList = () => {
+type Props = {
+  pageSize: number
+}
+
+export const ProductCardsList = ({ pageSize }: Props) => {
   const products = useSelector((state: AppRootState) => state.products.products)
   const pageCount = useSelector((state: AppRootState) => state.products.pageCount)
   const currentPage = useSelector((state: AppRootState) => state.products.currentPage)
+  const [filter, setFilter] = useState<'' | Category>('')
   const dispatch = useAppDispatch()
 
-  const pageSize = 10
-
   useEffect(() => {
-    dispatch(getProducts(currentPage, pageSize))
-  }, [dispatch, currentPage])
+    dispatch(getProducts(currentPage, pageSize, filter))
+  }, [dispatch, currentPage, filter, pageSize])
 
-  if (!products) {
-    return null
+  const handleChange = (event: SelectChangeEvent) => {
+    const selectedFilter = event.target.value as Category
+
+    setFilter(selectedFilter)
+    dispatch(getProducts(1, pageSize, selectedFilter))
   }
 
   return (
-    <div className={s.wrapper}>
-      <Pagination
-        count={pageCount}
-        defaultValue={1}
-        onChange={(_, value) => dispatch(setCurrentPage({ currentPage: value }))}
-        page={currentPage}
-        shape={'rounded'}
-      />
-      <div className={s.products}>
-        {products.map(p => (
-          <ProductCard key={p.id} product={p} />
-        ))}
+    <>
+      <Typography className={s.title} variant={'h4'}>
+        Каталог
+      </Typography>
+      <div className={s.wrapper}>
+        <div className={s.wrapperFilter}>
+          <FormControl className={s.select} size={'small'}>
+            <InputLabel id={'select-label'}>Фильтр</InputLabel>
+            <Select
+              id={'select'}
+              label={'Фильтр'}
+              labelId={'select-label'}
+              onChange={handleChange}
+              size={'small'}
+              value={filter}
+            >
+              <MenuItem value={'cushioned'}>Мягкая мебель</MenuItem>
+              <MenuItem value={'cabinet'}>Корпусная мебель</MenuItem>
+            </Select>
+          </FormControl>
+          <Pagination
+            count={pageCount}
+            defaultValue={1}
+            onChange={(_, value) => dispatch(setCurrentPage({ currentPage: value }))}
+            page={currentPage}
+            shape={'rounded'}
+          />
+        </div>
+        <div className={s.products}>
+          {products?.map(p => <ProductCard key={p.id} product={p} />)}
+        </div>
       </div>
-    </div>
+    </>
   )
 }

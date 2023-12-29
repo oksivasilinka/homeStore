@@ -1,8 +1,9 @@
+import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { CartForm } from '@/components/cart/cartForm'
 import { ProductCardInCart } from '@/components/productInCart'
-import { ProductInCart } from '@/services'
+import { ProductInCart, setCurrentPage, useAppDispatch } from '@/services'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
@@ -14,6 +15,11 @@ type Props = {
 
 export const Cart = ({ cart }: Props) => {
   const totalSum = cart.map(el => el.totalSum).reduce((a, b) => a + b, 0)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(setCurrentPage({ currentPage: 1 }))
+  }, [])
 
   return (
     <>

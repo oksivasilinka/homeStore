@@ -13,6 +13,7 @@ type Story = StoryObj<typeof meta>
 export const ProductInCartStory: Story = {
   args: {
     product: {
+      category: 'cushioned',
       description: 'Очень модный желтый диван. Из самой новой коллекции',
       id: '1',
       name: 'Диван желтый',

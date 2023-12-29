@@ -16,7 +16,7 @@ export const ProductCardInCart = ({ product }: Props) => {
 
   return (
     <Card className={s.wrapper}>
-      <CardMedia component={'img'} image={photo} sx={{ width: 200 }} title={name} />
+      <CardMedia component={'img'} image={photo} sx={{ height: 200, width: 200 }} title={name} />
       <Box className={s.productInfo}>
         <CardContent className={s.textWrapper}>
           <div>

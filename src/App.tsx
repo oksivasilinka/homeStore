@@ -22,6 +22,8 @@ const theme = createTheme({
   },
 })
 
+const pageSize = 9
+
 export function App() {
   const cart = useSelector((state: AppRootState) => state.cart)
   const dispatch = useAppDispatch()
@@ -41,7 +43,7 @@ export function App() {
       <Header />
       <Container>
         <Routes>
-          <Route element={<ProductCardsList />} path={'/'} />
+          <Route element={<ProductCardsList pageSize={pageSize} />} path={'/'} />
           <Route element={<Auth />} path={'/login'} />
           <Route element={<Cart cart={cart} />} path={'/cart'} />
         </Routes>
