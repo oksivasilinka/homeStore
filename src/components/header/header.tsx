@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
-import { AppRootState } from '@/services'
+import { cartSelector } from '@/services'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography'
 import s from './header.module.scss'
 
 export const Header = () => {
-  const cart = useSelector((state: AppRootState) => state.cart)
+  const cart = useSelector(cartSelector)
 
   const totalSum = cart.map(el => el.totalSum).reduce((a, b) => a + b, 0)
 

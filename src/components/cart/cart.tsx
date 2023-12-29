@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 import { CartForm } from '@/components/cart/cartForm'
 import { ProductCardInCart } from '@/components/productInCart'
-import { ProductInCart, setCurrentPage, useAppDispatch } from '@/services'
+import { ProductInCart, setCurrentPage, setFilter, useAppDispatch } from '@/services'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
@@ -19,6 +19,7 @@ export const Cart = ({ cart }: Props) => {
 
   useEffect(() => {
     dispatch(setCurrentPage({ currentPage: 1 }))
+    dispatch(setFilter({ filter: 'all' }))
   }, [])
 
   return (

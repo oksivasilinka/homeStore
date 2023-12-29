@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
+import { CategoryFilter } from '@/components/productCardsList/categoryFilter'
 import { ProductCard } from '@/components/productCardsList/productCard'
-import { AppRootState, Category, getProducts, setCurrentPage, useAppDispatch } from '@/services'
+import { getProducts, setCurrentPage, useAppDispatch } from '@/services'
 import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Pagination,
-  Select,
-  SelectChangeEvent,
-} from '@mui/material'
+  currentPageSelector,
+  filterSelector,
+  pageCountSelector,
+  productsSelector,
+} from '@/services/products/productsSelectors.ts'
+import { Pagination } from '@mui/material'
 import Typography from '@mui/material/Typography'
 
 import s from './productCardsList.module.scss'
@@ -20,22 +20,15 @@ type Props = {
 }
 
 export const ProductCardsList = ({ pageSize }: Props) => {
-  const products = useSelector((state: AppRootState) => state.products.products)
-  const pageCount = useSelector((state: AppRootState) => state.products.pageCount)
-  const currentPage = useSelector((state: AppRootState) => state.products.currentPage)
-  const [filter, setFilter] = useState<'' | Category>('')
+  const products = useSelector(productsSelector)
+  const pageCount = useSelector(pageCountSelector)
+  const currentPage = useSelector(currentPageSelector)
+  const filter = useSelector(filterSelector)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(getProducts(currentPage, pageSize, filter))
   }, [dispatch, currentPage, filter, pageSize])
-
-  const handleChange = (event: SelectChangeEvent) => {
-    const selectedFilter = event.target.value as Category
-
-    setFilter(selectedFilter)
-    dispatch(getProducts(1, pageSize, selectedFilter))
-  }
 
   return (
     <>
@@ -44,20 +37,7 @@ export const ProductCardsList = ({ pageSize }: Props) => {
       </Typography>
       <div className={s.wrapper}>
         <div className={s.wrapperFilter}>
-          <FormControl className={s.select} size={'small'}>
-            <InputLabel id={'select-label'}>Фильтр</InputLabel>
-            <Select
-              id={'select'}
-              label={'Фильтр'}
-              labelId={'select-label'}
-              onChange={handleChange}
-              size={'small'}
-              value={filter}
-            >
-              <MenuItem value={'cushioned'}>Мягкая мебель</MenuItem>
-              <MenuItem value={'cabinet'}>Корпусная мебель</MenuItem>
-            </Select>
-          </FormControl>
+          <CategoryFilter />
           <Pagination
             count={pageCount}
             defaultValue={1}

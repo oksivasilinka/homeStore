@@ -15,4 +15,4 @@ export type CartFormData = {
   phone: string
 }
 
-export type Category = 'cabinet' | 'cushioned'
+export type Category = 'all' | 'cabinet' | 'cushioned'

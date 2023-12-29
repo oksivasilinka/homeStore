@@ -1,4 +1,4 @@
-import { db } from '@/config/firebase'
+import { db } from '@/config/firebase.ts'
 import { Category, ProductInCart } from '@/services'
 import { Dispatch, PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { collection, getDocs } from 'firebase/firestore'
@@ -6,6 +6,7 @@ import { collection, getDocs } from 'firebase/firestore'
 const slice = createSlice({
   initialState: {
     currentPage: 1 as number,
+    filter: 'all' as Category,
     pageCount: 1 as number,
     products: [] as ProductInCart[],
   },
@@ -13,6 +14,9 @@ const slice = createSlice({
   reducers: {
     setCurrentPage: (state, action: PayloadAction<{ currentPage: number }>) => {
       state.currentPage = action.payload.currentPage
+    },
+    setFilter: (state, action: PayloadAction<{ filter: Category }>) => {
+      state.filter = action.payload.filter
     },
     setPageCount: (state, action: PayloadAction<{ pageCount: number }>) => {
       state.pageCount = action.payload.pageCount
@@ -28,6 +32,7 @@ export const getProducts =
     try {
       const productsCollectionRef = collection(db, 'product')
       const data = await getDocs(productsCollectionRef)
+
       const productsData = data.docs.map(doc => ({ ...doc.data(), id: doc.id }))
 
       let filteredProducts = productsData
@@ -56,4 +61,4 @@ export const getProducts =
   }
 
 export const productsSlice = slice.reducer
-export const { setCurrentPage, setPageCount, setProducts } = slice.actions
+export const { setCurrentPage, setFilter, setPageCount, setProducts } = slice.actions
