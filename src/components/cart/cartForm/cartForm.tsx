@@ -1,10 +1,10 @@
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
+import { ItemForm } from '@/components/cart/cartForm/inputForm'
 import { CartFormData, formSchema } from '@/services'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Card } from '@mui/material'
 import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
 import s from './cartForm.module.scss'
@@ -41,32 +41,29 @@ export const CartForm = () => {
         <Typography align={'center'} variant={'body2'}>
           Для оформления заказа заполните форму ниже
         </Typography>
-        <Controller
+        <ItemForm
           control={control}
+          error={errors.name?.message}
+          label={'Ваше имя'}
           name={'name'}
-          render={({ field }) => (
-            <TextField {...field} label={'Ваше имя'} placeholder={'Имя'} size={'small'} />
-          )}
+          placeholder={'Имя'}
         />
-        {errors.name?.message && <Typography color={'red'}>{errors.name.message}</Typography>}
 
-        <Controller
+        <ItemForm
           control={control}
-          name={'email'}
-          render={({ field }) => (
-            <TextField {...field} label={'Ваш email'} placeholder={'Email'} size={'small'} />
-          )}
+          error={errors.email?.message}
+          label={'Ваш email'}
+          name={'Email'}
+          placeholder={'Телефон'}
         />
-        {errors.email?.message && <Typography color={'red'}>{errors.email.message}</Typography>}
 
-        <Controller
+        <ItemForm
           control={control}
+          error={errors.phone?.message}
+          label={'Ваш телефон'}
           name={'phone'}
-          render={({ field }) => (
-            <TextField {...field} label={'Ваш телефон'} placeholder={'Телефон'} size={'small'} />
-          )}
+          placeholder={'Телефон'}
         />
-        {errors.phone?.message && <Typography color={'red'}>{errors.phone.message}</Typography>}
         <Button type={'submit'} variant={'contained'}>
           Оформить заказ
         </Button>
