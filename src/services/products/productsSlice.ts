@@ -1,5 +1,7 @@
-import { db } from '@/config/firebase.ts'
+import { db } from '@/config/firebase'
 import { Category, ProductInCart } from '@/services'
+import { filterProducts } from '@/services/utils/filterProducts'
+import { paginationProducts } from '@/services/utils/paginationProducts'
 import { Dispatch, PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { collection, getDocs } from 'firebase/firestore'
 
@@ -28,28 +30,18 @@ const slice = createSlice({
 })
 
 export const getProducts =
-  (currentPage: number, pageSize: number, filter: '' | Category) => async (dispatch: Dispatch) => {
+  (currentPage: number, pageSize: number, filter: Category) => async (dispatch: Dispatch) => {
     try {
       const productsCollectionRef = collection(db, 'product')
       const data = await getDocs(productsCollectionRef)
 
       const productsData = data.docs.map(doc => ({ ...doc.data(), id: doc.id }))
 
-      let filteredProducts = productsData
-
-      if (filter === 'cushioned') {
-        filteredProducts = productsData.filter((el: any) => el.category === 'cushioned')
-      }
-      if (filter === 'cabinet') {
-        filteredProducts = productsData.filter((el: any) => el.category === 'cabinet')
-      }
-
-      const pageCount = Math.ceil(filteredProducts.length / pageSize)
-      const updatedCurrentPage = Math.min(currentPage, pageCount)
-
-      const paginatedData = filteredProducts.slice(
-        (currentPage - 1) * pageSize,
-        currentPage * pageSize
+      const products = filterProducts(productsData, filter)
+      const { pageCount, paginatedData, updatedCurrentPage } = paginationProducts(
+        products,
+        pageSize,
+        currentPage
       )
 
       dispatch(setProducts({ products: paginatedData }))
