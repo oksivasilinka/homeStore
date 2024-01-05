@@ -37,14 +37,14 @@ export const getProducts =
 
       const productsData = data.docs.map(doc => ({ ...doc.data(), id: doc.id }))
 
-      const products = filterProducts(productsData, filter)
-      const { pageCount, paginatedData, updatedCurrentPage } = paginationProducts(
-        products,
+      const filteredProducts = filterProducts(productsData, filter)
+      const { pageCount, productsInPage, updatedCurrentPage } = paginationProducts(
+        filteredProducts,
         pageSize,
         currentPage
       )
 
-      dispatch(setProducts({ products: paginatedData }))
+      dispatch(setProducts({ products: productsInPage }))
       dispatch(setPageCount({ pageCount }))
       dispatch(setCurrentPage({ currentPage: updatedCurrentPage }))
     } catch (e) {

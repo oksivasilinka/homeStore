@@ -8,7 +8,7 @@ export const paginationProducts = (
   const pageCount = Math.ceil(products.length / pageSize)
 
   const updatedCurrentPage = Math.min(currentPage, pageCount)
-  const paginatedData = products.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+  const productsInPage = products.slice((currentPage - 1) * pageSize, currentPage * pageSize)
 
-  return { pageCount, paginatedData, updatedCurrentPage }
+  return { pageCount, productsInPage, updatedCurrentPage }
 }

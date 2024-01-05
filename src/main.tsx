@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { store } from '@/services/store'
 import ReactDOM from 'react-dom/client'
 
+import './config/firebase'
 import './styles/index.scss'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/700.css'

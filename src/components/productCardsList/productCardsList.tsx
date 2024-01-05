@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import { CategoryFilter, ProductCard } from '@/components/productCardsList'
-import { getProducts, setCurrentPage, useAppDispatch } from '@/services'
+import { getProducts, setCurrentPage, useAppDispatch, useAuth } from '@/services'
 import {
   currentPageSelector,
   filterSelector,
@@ -19,15 +20,22 @@ type Props = {
 }
 
 export const ProductCardsList = ({ pageSize }: Props) => {
+  const { isAuth } = useAuth()
   const products = useSelector(productsSelector)
   const pageCount = useSelector(pageCountSelector)
   const currentPage = useSelector(currentPageSelector)
   const filter = useSelector(filterSelector)
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    dispatch(getProducts(currentPage, pageSize, filter))
-  }, [dispatch, currentPage, filter, pageSize])
+    if (!isAuth) {
+      navigate('/login')
+    } else {
+      navigate('/')
+      dispatch(getProducts(currentPage, pageSize, filter))
+    }
+  }, [dispatch, currentPage, filter, pageSize, isAuth, navigate])
 
   return (
     <>

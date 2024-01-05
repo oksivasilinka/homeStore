@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 import { CartForm } from '@/components/cart/cartForm'
 import { ProductCardInCart } from '@/components/productInCart'
-import { ProductInCart, setCurrentPage, setFilter, useAppDispatch } from '@/services'
+import { ProductInCart, setCurrentPage, setFilter, useAppDispatch, useAuth } from '@/services'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
@@ -14,6 +14,7 @@ type Props = {
 }
 
 export const Cart = ({ cart }: Props) => {
+  const { isAuth } = useAuth()
   const totalSum = cart.map(el => el.totalSum).reduce((a, b) => a + b, 0)
   const dispatch = useAppDispatch()
 
@@ -28,7 +29,15 @@ export const Cart = ({ cart }: Props) => {
         Корзина
       </Typography>
       <Box className={s.wrapper}>
-        {!!totalSum && (
+        {!isAuth && (
+          <Box className={s.emptyCart}>
+            <Typography variant={'h6'}>Войдите в ваш аккаунт или зарегистрируйтесь</Typography>
+            <NavLink to={'/login'}>
+              <Typography variant={'body2'}>Зарегистрироваться и войти</Typography>
+            </NavLink>
+          </Box>
+        )}
+        {!!totalSum && isAuth && (
           <>
             <Box className={s.wrapperProducts}>
               {cart.map(p => (

@@ -1,20 +1,59 @@
 import { ChangeEvent, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
-import { auth } from '@/config/firebase'
+import { auth, googleProvider } from '@/config/firebase'
+import { setUser, useAppDispatch } from '@/services'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from 'firebase/auth'
 
 import s from './auth.module.scss'
 
 export const Auth = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
   const signInHandler = async () => {
-    await createUserWithEmailAndPassword(auth, email, password)
+    try {
+      const data = await signInWithEmailAndPassword(auth, email, password)
+
+      dispatch(
+        setUser({
+          email: data.user.email,
+          id: data.user.uid,
+          token: data.user.refreshToken,
+        })
+      )
+    } catch (e) {
+      console.log(e)
+    }
   }
+
+  const registerHandler = async () => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const signInWithGoogleHandler = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider)
+      console.log(googleProvider)
+      navigate('/')
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   const setEmailHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.currentTarget.value)
   }
@@ -35,11 +74,17 @@ export const Auth = () => {
         size={'small'}
         type={'password'}
       />
+
+      <Button fullWidth onClick={registerHandler} variant={'contained'}>
+        Зарегистрироваться
+      </Button>
+
       <NavLink to={'/'}>
-        <Button onClick={signInHandler} variant={'contained'}>
+        <Button fullWidth onClick={signInHandler} variant={'contained'}>
           Войти
         </Button>
       </NavLink>
+      <Button onClick={signInWithGoogleHandler}>Войти с помощью Google</Button>
     </div>
   )
 }

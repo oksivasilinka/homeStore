@@ -26,6 +26,7 @@ const pageSize = 9
 
 export function App() {
   const cart = useSelector((state: AppRootState) => state.cart)
+  const totalSum = cart.map(el => el.totalSum).reduce((a, b) => a + b, 0)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header />
+      <Header totalSum={totalSum} />
       <Container>
         <Routes>
           <Route element={<ProductCardsList pageSize={pageSize} />} path={'/'} />

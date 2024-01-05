@@ -12,6 +12,6 @@ export default meta
 type Story = StoryObj<typeof meta>
 export const HeaderStory: Story = {
   args: {
-    total: 1500,
+    totalSum: 1500,
   },
 }

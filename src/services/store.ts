@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux'
 
 import { cartSlice, productsSlice } from '@/services'
+import { authSlice } from '@/services/auth/authSlice'
 import { configureStore } from '@reduxjs/toolkit'
 
 let preloadedState
@@ -13,6 +14,7 @@ if (persistedValuesString) {
 export const store = configureStore({
   preloadedState,
   reducer: {
+    auth: authSlice,
     cart: cartSlice,
     products: productsSlice,
   },
