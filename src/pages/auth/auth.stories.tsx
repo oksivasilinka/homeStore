@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Auth } from './auth'
+import { Auth } from '@/pages'
 
 const meta = {
   component: Auth,

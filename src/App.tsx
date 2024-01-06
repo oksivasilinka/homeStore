@@ -2,10 +2,9 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
 
-import { Auth } from '@/components/auth'
-import { Cart } from '@/components/cart'
 import { Header } from '@/components/header'
-import { ProductCardsList } from '@/components/productCardsList'
+import { Auth, Catalog } from '@/pages'
+import { Cart } from '@/pages/cart'
 import { setCart } from '@/services'
 import { AppRootState, useAppDispatch } from '@/services/store'
 import { Container } from '@mui/material'
@@ -44,7 +43,7 @@ export function App() {
       <Header totalSum={totalSum} />
       <Container>
         <Routes>
-          <Route element={<ProductCardsList pageSize={pageSize} />} path={'/'} />
+          <Route element={<Catalog pageSize={pageSize} />} path={'/'} />
           <Route element={<Auth />} path={'/login'} />
           <Route element={<Cart cart={cart} />} path={'/cart'} />
         </Routes>

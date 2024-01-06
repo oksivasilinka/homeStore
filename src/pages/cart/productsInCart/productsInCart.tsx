@@ -1,4 +1,4 @@
-import { NumericInput } from '@/components/productInCart'
+import { NumericInput } from '@/components'
 import { ProductInCart } from '@/services'
 import { Card, CardActions } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -6,12 +6,12 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 
-import s from './productCardInCart.module.scss'
+import s from './productsInCart.module.scss'
 
 type Props = {
   product: ProductInCart
 }
-export const ProductCardInCart = ({ product }: Props) => {
+export const ProductsInCart = ({ product }: Props) => {
   const { name, photo, price, totalSum } = product
 
   return (

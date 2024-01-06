@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { ItemForm } from '@/components/cart/cartForm/inputForm'
+import { ItemForm } from '@/components/inputForm'
 import { CartFormData, formSchema } from '@/services'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Card } from '@mui/material'

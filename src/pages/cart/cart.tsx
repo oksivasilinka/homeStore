@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { CartForm } from '@/components/cart/cartForm'
-import { ProductCardInCart } from '@/components/productInCart'
+import { CartForm } from '@/pages/cart/cartForm'
+import { ProductsInCart } from '@/pages/cart/productsInCart'
 import { ProductInCart, setCurrentPage, setFilter, useAppDispatch, useAuth } from '@/services'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -41,7 +41,7 @@ export const Cart = ({ cart }: Props) => {
           <>
             <Box className={s.wrapperProducts}>
               {cart.map(p => (
-                <ProductCardInCart key={p.name} product={p} />
+                <ProductsInCart key={p.name} product={p} />
               ))}
               <>
                 <Typography variant={'h5'}>Итого {totalSum || 0} руб.</Typography>
