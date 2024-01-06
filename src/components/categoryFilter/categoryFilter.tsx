@@ -33,7 +33,9 @@ export const CategoryFilter = () => {
         value={filter}
       >
         {category.map(item => (
-          <MenuItem value={item.type}>{item.name}</MenuItem>
+          <MenuItem key={item.type} value={item.type}>
+            {item.name}
+          </MenuItem>
         ))}
       </Select>
     </FormControl>

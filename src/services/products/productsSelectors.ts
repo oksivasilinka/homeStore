@@ -1,4 +1,4 @@
-import { AppRootState } from '@/services/store.ts'
+import { AppRootState } from '@/services'
 
 export const productsSelector = (state: AppRootState) => state.products.products
 export const pageCountSelector = (state: AppRootState) => state.products.pageCount

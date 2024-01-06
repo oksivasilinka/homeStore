@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 
 import { auth } from '@/config/firebase'
-import { useAppDispatch } from '@/services'
+import { setFilter, useAppDispatch } from '@/services'
 import { logout } from '@/services/auth/authSlice'
 import { useAuth } from '@/services/hooks/useAuth'
 import { Container } from '@mui/material'
@@ -26,6 +26,7 @@ export const Header = ({ totalSum }: Props) => {
     try {
       await signOut(auth)
       dispatch(logout())
+      dispatch(setFilter({ filter: 'all' }))
       navigate('/login')
     } catch (e) {
       console.log(e)
@@ -49,12 +50,16 @@ export const Header = ({ totalSum }: Props) => {
                   {totalSum} руб.
                 </Typography>
               )}
-              <NavLink to={'/cart'}>
-                <Button variant={'contained'}>
-                  <Typography>Корзина</Typography>
-                </Button>
-              </NavLink>
-              <Button onClick={logoutHandler}>Выйти</Button>
+              {isAuth && (
+                <>
+                  <NavLink to={'/cart'}>
+                    <Button variant={'contained'}>
+                      <Typography>Корзина</Typography>
+                    </Button>
+                  </NavLink>
+                  <Button onClick={logoutHandler}>Выйти</Button>
+                </>
+              )}
             </Box>
           </Toolbar>
         </Container>

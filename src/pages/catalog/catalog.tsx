@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
+import { CategoryFilter } from '@/components'
 import { ProductCard } from '@/pages'
 import { getProducts, setCurrentPage, useAppDispatch, useAuth } from '@/services'
 import {
@@ -14,8 +15,6 @@ import { Pagination } from '@mui/material'
 import Typography from '@mui/material/Typography'
 
 import s from './catalog.module.scss'
-
-import { CategoryFilter } from '../../components/categoryFilter'
 
 type Props = {
   pageSize: number
