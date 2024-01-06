@@ -5,6 +5,12 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@m
 
 import s from './categoryFilter.module.scss'
 
+const category = [
+  { name: 'Все товары', type: 'all' },
+  { name: 'Мягкая мебель', type: 'cushioned' },
+  { name: 'Корпусная мебель', type: 'cabinet' },
+]
+
 export const CategoryFilter = () => {
   const filter = useSelector(filterSelector)
   const dispatch = useAppDispatch()
@@ -26,11 +32,9 @@ export const CategoryFilter = () => {
         size={'small'}
         value={filter}
       >
-        <MenuItem defaultValue={'all'} value={'all'}>
-          Все товары
-        </MenuItem>
-        <MenuItem value={'cushioned'}>Мягкая мебель</MenuItem>
-        <MenuItem value={'cabinet'}>Корпусная мебель</MenuItem>
+        {category.map(item => (
+          <MenuItem value={item.type}>{item.name}</MenuItem>
+        ))}
       </Select>
     </FormControl>
   )
