@@ -1,6 +1,5 @@
 import { auth } from '@/config/firebase'
-import { Error, SignInFormData } from '@/pages'
-import { setError } from '@/services'
+import { Error, SignInFormData, setError } from '@/services'
 import { Dispatch, PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 

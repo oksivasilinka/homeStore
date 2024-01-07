@@ -16,3 +16,12 @@ export type CartFormData = {
 }
 
 export type Category = 'all' | 'cabinet' | 'cushioned'
+
+export type SignInFormData = {
+  email: string
+  password: string
+}
+
+export type Error = {
+  code: string
+}

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
 
 import { Header } from '@/components'
-import { Cart, Catalog, SignIn } from '@/pages'
+import { Cart, Catalog, Login, SignIn } from '@/pages'
 import { cartSelector, setCart, useAppDispatch } from '@/services'
 import { Container } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
@@ -42,7 +42,8 @@ export function App() {
       <Container>
         <Routes>
           <Route element={<Catalog pageSize={pageSize} />} path={'/'} />
-          <Route element={<SignIn />} path={'/login'} />
+          <Route element={<SignIn />} path={'/sign-in'} />
+          <Route element={<Login />} path={'/login'} />
           <Route element={<Cart cart={cart} />} path={'/cart'} />
         </Routes>
       </Container>

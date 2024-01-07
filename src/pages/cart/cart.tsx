@@ -32,7 +32,7 @@ export const Cart = ({ cart }: Props) => {
         {!isAuth && (
           <Box className={s.emptyCart}>
             <Typography variant={'h6'}>Войдите в ваш аккаунт или зарегистрируйтесь</Typography>
-            <NavLink to={'/login'}>
+            <NavLink to={'/sign-in'}>
               <Typography variant={'body2'}>Зарегистрироваться и войти</Typography>
             </NavLink>
           </Box>

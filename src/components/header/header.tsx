@@ -1,5 +1,4 @@
-import { useEffect } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import { auth } from '@/config/firebase'
 import { logout, setFilter, useAppDispatch, useAuth } from '@/services'
@@ -19,13 +18,6 @@ type Props = {
 export const Header = ({ totalSum }: Props) => {
   const { isAuth } = useAuth()
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (!isAuth) {
-      navigate('/login')
-    }
-  }, [isAuth, navigate])
 
   const logoutHandler = async () => {
     try {
