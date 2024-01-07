@@ -1,15 +1,15 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { ItemForm } from '@/components'
-import { auth } from '@/config/firebase'
-import { setUser, signInSchema, useAppDispatch } from '@/services'
+import { errorSelector, setError, signIn, signInSchema, useAppDispatch, useAuth } from '@/services'
 import { yupResolver } from '@hookform/resolvers/yup'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import { signInWithEmailAndPassword } from 'firebase/auth'
 
-import s from './../auth.module.scss'
+import s from './signIn.module.scss'
 
 export type SignInFormData = {
   email: string
@@ -21,7 +21,22 @@ export type Error = {
 }
 
 export const SignIn = () => {
+  useEffect(() => {
+    dispatch(setError({ error: null }))
+  }, [])
+
   const navigate = useNavigate()
+  const error = useSelector(errorSelector)
+  const { isAuth } = useAuth()
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate('/')
+    } else {
+      return
+    }
+  }, [isAuth, navigate])
+
   const {
     control,
     formState: { errors },
@@ -38,24 +53,11 @@ export const SignIn = () => {
 
   const onSubmit = async (formData: SignInFormData) => {
     try {
-      const data = await signInWithEmailAndPassword(auth, formData.email, formData.password)
+      await dispatch(signIn(formData))
+    } catch (error: unknown) {
+      const err = error as string
 
-      dispatch(
-        setUser({
-          email: data.user.email,
-          id: data.user.uid,
-          token: data.user.refreshToken,
-        })
-      )
-      navigate('/')
-    } catch (e: unknown) {
-      if (e as Error) {
-        if ((e as Error).code === 'auth/invalid-login-credentials') {
-          alert('Неверный email или пароль')
-        }
-      } else {
-        alert('Неизвестная ошибка')
-      }
+      dispatch(setError({ error: err }))
     }
   }
 
@@ -68,14 +70,14 @@ export const SignIn = () => {
 
         <ItemForm
           control={control}
-          error={errors.email?.message}
+          error={errors.email?.message || error || undefined}
           label={'Ваш email'}
           name={'email'}
           placeholder={'Email'}
         />
         <ItemForm
           control={control}
-          error={errors.password?.message}
+          error={errors.password?.message || error || undefined}
           label={'Ваш пароль'}
           name={'password'}
           placeholder={'Пароль'}

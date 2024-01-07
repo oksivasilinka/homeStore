@@ -2,15 +2,11 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
 
-import { Header } from '@/components/header'
-import { Catalog } from '@/pages'
-import { Cart } from '@/pages/cart'
-import { setCart } from '@/services'
-import { AppRootState, useAppDispatch } from '@/services/store'
+import { Header } from '@/components'
+import { Cart, Catalog, SignIn } from '@/pages'
+import { cartSelector, setCart, useAppDispatch } from '@/services'
 import { Container } from '@mui/material'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
-
-import { SignIn } from './pages/auth/signIn/signIn'
 
 const theme = createTheme({
   palette: {
@@ -26,7 +22,7 @@ const theme = createTheme({
 const pageSize = 9
 
 export function App() {
-  const cart = useSelector((state: AppRootState) => state.cart)
+  const cart = useSelector(cartSelector)
   const totalSum = cart.map(el => el.totalSum).reduce((a, b) => a + b, 0)
   const dispatch = useAppDispatch()
 

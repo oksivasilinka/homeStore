@@ -1,5 +1,4 @@
 import { ChangeEvent, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { auth, googleProvider } from '@/config/firebase'
 import Button from '@mui/material/Button'
@@ -12,7 +11,6 @@ import s from './auth.module.scss'
 export const Auth = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const navigate = useNavigate()
 
   const registerHandler = async () => {
     try {
@@ -26,7 +24,6 @@ export const Auth = () => {
     try {
       await signInWithPopup(auth, googleProvider)
       console.log(googleProvider)
-      navigate('/')
     } catch (e) {
       console.log(e)
     }

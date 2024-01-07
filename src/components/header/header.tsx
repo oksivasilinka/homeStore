@@ -1,9 +1,8 @@
+import { useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 import { auth } from '@/config/firebase'
-import { setFilter, useAppDispatch } from '@/services'
-import { logout } from '@/services/auth/authSlice'
-import { useAuth } from '@/services/hooks/useAuth'
+import { logout, setFilter, useAppDispatch, useAuth } from '@/services'
 import { Container } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
@@ -20,14 +19,19 @@ type Props = {
 export const Header = ({ totalSum }: Props) => {
   const { isAuth } = useAuth()
   const dispatch = useAppDispatch()
-
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!isAuth) {
+      navigate('/login')
+    }
+  }, [isAuth, navigate])
+
   const logoutHandler = async () => {
     try {
       await signOut(auth)
       dispatch(logout())
       dispatch(setFilter({ filter: 'all' }))
-      navigate('/login')
     } catch (e) {
       console.log(e)
     }

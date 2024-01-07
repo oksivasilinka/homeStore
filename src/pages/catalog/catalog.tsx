@@ -33,7 +33,6 @@ export const Catalog = ({ pageSize }: Props) => {
     if (!isAuth) {
       navigate('/login')
     } else {
-      navigate('/')
       dispatch(getProducts(currentPage, pageSize, filter))
     }
   }, [dispatch, currentPage, filter, pageSize, isAuth, navigate])
