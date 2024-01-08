@@ -1,7 +1,7 @@
-import { auth } from '@/config/firebase'
+import { auth, googleProvider } from '@/config/firebase'
 import { Error, SignInFormData, setError } from '@/services'
 import { Dispatch, PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 
 const slice = createSlice({
   initialState: {
@@ -47,6 +47,23 @@ export const signIn = (formData: SignInFormData) => async (dispatch: Dispatch) =
     } else {
       dispatch(setError({ error: 'Неизвестная ошибка' }))
     }
+  }
+}
+
+export const signInWithGoogle = () => async (dispatch: Dispatch) => {
+  try {
+    const data = await signInWithPopup(auth, googleProvider)
+    const credential = GoogleAuthProvider.credentialFromResult(data)
+    const token = credential?.accessToken
+    const user = data.user
+    const email = user?.email
+    const id = user?.uid
+
+    if (token) {
+      dispatch(setUser({ email, id, token }))
+    }
+  } catch (e) {
+    console.log(e)
   }
 }
 

@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 import { AuthForm } from '@/components'
+import { AuthWithGoogle } from '@/pages'
 import { SignInFormData, setError, signIn, useAppDispatch, useAuth } from '@/services'
 import Typography from '@mui/material/Typography'
 
@@ -38,6 +39,7 @@ export const SignIn = () => {
   return (
     <div className={s.wrapper}>
       <AuthForm onSubmit={onSubmit} title={'Войти в аккаунт'} titleButton={'Войти'} />
+      <AuthWithGoogle />
       <Typography>
         Если у Вас нет аккаунта, пройдите <NavLink to={'/login'}>регистрацию</NavLink>
       </Typography>
