@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { ItemForm } from '@/components/inputForm'
+import { ModalCart } from '@/components/modal/modal'
 import { CartFormData, formSchema } from '@/services'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Card } from '@mui/material'
@@ -10,6 +12,13 @@ import Typography from '@mui/material/Typography'
 import s from './cartForm.module.scss'
 
 export const CartForm = () => {
+  const [open, setOpen] = useState(false)
+  const [data, setData] = useState<CartFormData | null>(null)
+  const handleOpen = (formData: CartFormData) => {
+    setOpen(true)
+    setData(formData)
+  }
+
   const {
     control,
     formState: { errors },
@@ -23,9 +32,9 @@ export const CartForm = () => {
     resolver: yupResolver(formSchema),
   })
 
-  const onSubmit: SubmitHandler<CartFormData> = async (data: CartFormData) => {
+  const onSubmit: SubmitHandler<CartFormData> = async (formData: CartFormData) => {
     try {
-      console.log(data)
+      handleOpen(formData)
     } catch (e) {
       console.log(errors.email?.message)
       console.log(e)
@@ -53,8 +62,8 @@ export const CartForm = () => {
           control={control}
           error={errors.email?.message}
           label={'Ваш email'}
-          name={'Email'}
-          placeholder={'Телефон'}
+          name={'email'}
+          placeholder={'Email'}
         />
 
         <ItemForm
@@ -67,6 +76,7 @@ export const CartForm = () => {
         <Button type={'submit'} variant={'contained'}>
           Оформить заказ
         </Button>
+        {data && <ModalCart data={data} open={open} setOpen={setOpen} />}
       </Card>
     </form>
   )
