@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
+import { BaseModal, ConfirmOrder, InfoConfirm } from '@/components'
 import { ItemForm } from '@/components/inputForm'
-import { ModalCart } from '@/components/modal/modal'
 import { CartFormData, formSchema } from '@/services'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Card } from '@mui/material'
@@ -12,12 +12,10 @@ import Typography from '@mui/material/Typography'
 import s from './cartForm.module.scss'
 
 export const CartForm = () => {
-  const [open, setOpen] = useState(false)
+  const [isOpen, setIsOpenModal] = useState(false)
   const [data, setData] = useState<CartFormData | null>(null)
-  const handleOpen = (formData: CartFormData) => {
-    setOpen(true)
-    setData(formData)
-  }
+  const [isOpenFinishModal, setIsOpenFinishModal] = useState(false)
+  const [isOpenModalCart, setIsOpenConfirmOrderModal] = useState(false)
 
   const {
     control,
@@ -32,13 +30,26 @@ export const CartForm = () => {
     resolver: yupResolver(formSchema),
   })
 
-  const onSubmit: SubmitHandler<CartFormData> = async (formData: CartFormData) => {
-    try {
-      handleOpen(formData)
-    } catch (e) {
-      console.log(errors.email?.message)
-      console.log(e)
-    }
+  const onSubmit: SubmitHandler<CartFormData> = (formData: CartFormData) => {
+    setIsOpenModal(true)
+    setIsOpenConfirmOrderModal(true)
+    setData(formData)
+  }
+
+  const onCloseConfirmOrderModal = () => {
+    setIsOpenFinishModal(true)
+    setIsOpenConfirmOrderModal(false)
+  }
+
+  const oncloseFinishModal = () => {
+    setIsOpenModal(false)
+    setIsOpenFinishModal(false)
+  }
+
+  const onCloseCallback = () => {
+    setIsOpenModal(false)
+    setIsOpenConfirmOrderModal(false)
+    setIsOpenFinishModal(false)
   }
 
   return (
@@ -76,7 +87,14 @@ export const CartForm = () => {
         <Button type={'submit'} variant={'contained'}>
           Оформить заказ
         </Button>
-        {data && <ModalCart data={data} open={open} setOpen={setOpen} />}
+        {data && (
+          <BaseModal callback={onCloseCallback} data={data} isOpen={isOpen}>
+            <>
+              {isOpenModalCart && <ConfirmOrder callback={onCloseConfirmOrderModal} data={data} />}
+              {isOpenFinishModal && <InfoConfirm callback={oncloseFinishModal} />}
+            </>
+          </BaseModal>
+        )}
       </Card>
     </form>
   )
