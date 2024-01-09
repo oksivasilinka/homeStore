@@ -1,7 +1,12 @@
 import { auth, googleProvider } from '@/config/firebase'
 import { Error, SignInFormData, setError } from '@/services'
 import { Dispatch, PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
+import {
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from 'firebase/auth'
 
 const slice = createSlice({
   initialState: {
@@ -27,6 +32,23 @@ const slice = createSlice({
   },
 })
 
+export const login = (formData: SignInFormData) => async (dispatch: Dispatch) => {
+  try {
+    await createUserWithEmailAndPassword(auth, formData.email, formData.password)
+    dispatch(setError({ error: null }))
+
+    return auth
+  } catch (e: unknown) {
+    if (e as Error) {
+      if ((e as Error).code === 'auth/email-already-in-use') {
+        dispatch(setError({ error: 'Пользователь с таким email уже существует' }))
+      }
+    } else {
+      dispatch(setError({ error: 'Произошла ошибка' }))
+    }
+  }
+}
+
 export const signIn = (formData: SignInFormData) => async (dispatch: Dispatch) => {
   try {
     const data = await signInWithEmailAndPassword(auth, formData.email, formData.password)
@@ -45,7 +67,7 @@ export const signIn = (formData: SignInFormData) => async (dispatch: Dispatch) =
         dispatch(setError({ error: 'Неверный email или пароль' }))
       }
     } else {
-      dispatch(setError({ error: 'Неизвестная ошибка' }))
+      dispatch(setError({ error: 'Произошла ошибка' }))
     }
   }
 }
@@ -63,7 +85,7 @@ export const signInWithGoogle = () => async (dispatch: Dispatch) => {
       dispatch(setUser({ email, id, token }))
     }
   } catch (e) {
-    console.log(e)
+    dispatch(setError({ error: 'Произошла ошибка' }))
   }
 }
 

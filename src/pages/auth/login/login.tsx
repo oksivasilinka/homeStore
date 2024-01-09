@@ -2,30 +2,32 @@ import { useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 import { AuthForm } from '@/components'
-import { auth } from '@/config/firebase'
 import { AuthWithGoogle } from '@/pages'
-import { SignInFormData, useAuth } from '@/services'
+import { SignInFormData, login, setError, useAppDispatch } from '@/services'
 import Typography from '@mui/material/Typography'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
 
 import s from './login.module.scss'
 
 export const Login = () => {
   const navigate = useNavigate()
-  const { isAuth } = useAuth()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (isAuth) {
-      navigate('/')
-    }
-  }, [isAuth])
+    dispatch(setError({ error: null }))
+  }, [])
 
-  const onSubmit = async (formData: SignInFormData) => {
-    try {
-      await createUserWithEmailAndPassword(auth, formData.email, formData.password)
-    } catch (e) {
-      console.log(e)
-    }
+  const onSubmit = (formData: SignInFormData) => {
+    dispatch(login(formData))
+      .then(res => {
+        if (res?.currentUser?.uid) {
+          navigate('/sign-in')
+        }
+      })
+      .catch((e: unknown) => {
+        const err = e as string
+
+        dispatch(setError({ error: err }))
+      })
   }
 
   return (

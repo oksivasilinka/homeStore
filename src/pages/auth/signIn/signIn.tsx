@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import { AuthForm } from '@/components'
 import { AuthWithGoogle } from '@/pages'
-import { SignInFormData, setError, signIn, useAppDispatch, useAuth } from '@/services'
+import { SignInFormData, setError, signIn, useAppDispatch } from '@/services'
 import Typography from '@mui/material/Typography'
 
 import s from './signIn.module.scss'
@@ -12,17 +12,6 @@ export const SignIn = () => {
   useEffect(() => {
     dispatch(setError({ error: null }))
   }, [])
-
-  const navigate = useNavigate()
-  const { isAuth } = useAuth()
-
-  useEffect(() => {
-    if (isAuth) {
-      navigate('/')
-    } else {
-      return
-    }
-  }, [isAuth, navigate])
 
   const dispatch = useAppDispatch()
 
