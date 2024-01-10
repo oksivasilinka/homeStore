@@ -5,19 +5,9 @@ import { Route, Routes } from 'react-router-dom'
 import { Header } from '@/components'
 import { Cart, Catalog, Login, SignIn } from '@/pages'
 import { cartSelector, setCart, useAppDispatch } from '@/services'
+import { theme } from '@/styles'
 import { Container } from '@mui/material'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#442c2e',
-    },
-    secondary: {
-      main: '#fedbd0',
-    },
-  },
-})
+import { ThemeProvider } from '@mui/material/styles'
 
 const pageSize = 9
 
