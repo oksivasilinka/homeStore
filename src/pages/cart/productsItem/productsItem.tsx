@@ -6,12 +6,12 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 
-import s from './productsInCart.module.scss'
+import s from './productsItem.module.scss'
 
 type Props = {
   product: ProductInCart
 }
-export const ProductsInCart = ({ product }: Props) => {
+export const ProductsItem = ({ product }: Props) => {
   const { name, photo, price, totalSum } = product
 
   return (
@@ -19,11 +19,11 @@ export const ProductsInCart = ({ product }: Props) => {
       <CardMedia component={'img'} image={photo} sx={{ height: 200, width: 200 }} title={name} />
       <Box className={s.productInfo}>
         <CardContent className={s.textWrapper}>
-          <div>
+          <Box>
             <Typography variant={'h6'}>{name}</Typography>
 
             <Typography variant={'subtitle1'}>Цена за 1шт. {price} руб.</Typography>
-          </div>
+          </Box>
           <Typography variant={'h6'}>Сумма {totalSum} руб.</Typography>
         </CardContent>
         <CardActions className={s.buttonWrapper}>

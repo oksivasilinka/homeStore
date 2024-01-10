@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { BaseModal, ConfirmOrder, InfoConfirm } from '@/components'
 import { ItemForm } from '@/components/inputForm'
-import { CartFormData, formSchema } from '@/services'
+import { CartData, CartFormData, formSchema } from '@/services'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Card } from '@mui/material'
 import Button from '@mui/material/Button'
@@ -11,9 +11,13 @@ import Typography from '@mui/material/Typography'
 
 import s from './cartForm.module.scss'
 
-export const CartForm = () => {
+type Props = {
+  totalSum: number
+}
+
+export const CartForm = ({ totalSum }: Props) => {
   const [isOpen, setIsOpenModal] = useState(false)
-  const [data, setData] = useState<CartFormData | null>(null)
+  const [data, setData] = useState<CartData | null>(null)
   const [isOpenFinishModal, setIsOpenFinishModal] = useState(false)
   const [isOpenModalCart, setIsOpenConfirmOrderModal] = useState(false)
 
@@ -33,7 +37,7 @@ export const CartForm = () => {
   const onSubmit: SubmitHandler<CartFormData> = (formData: CartFormData) => {
     setIsOpenModal(true)
     setIsOpenConfirmOrderModal(true)
-    setData(formData)
+    setData({ ...formData, totalSum })
   }
 
   const onCloseConfirmOrderModal = () => {

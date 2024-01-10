@@ -1,7 +1,4 @@
-import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-
-import { AppRootState, ProductInCart, addProductInCart, useAppDispatch } from '@/services'
+import { ProductInCart, addProductInCart, useAppDispatch } from '@/services'
 import { Card } from '@mui/material'
 import Button from '@mui/material/Button'
 import CardMedia from '@mui/material/CardMedia'
@@ -16,12 +13,7 @@ type Props = {
 
 export const ProductCard = ({ product }: Props) => {
   const { description, name, photo, price } = product
-  const cart = useSelector((state: AppRootState) => state.cart)
   const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart))
-  }, [cart])
 
   const addProductHandler = () => {
     dispatch(addProductInCart({ product }))

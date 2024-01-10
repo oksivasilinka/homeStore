@@ -9,10 +9,13 @@ export type ProductInCart = {
   totalSum: number
 }
 
-export type CartFormData = {
+export type CartFormData = Omit<CartData, 'totalSum'>
+
+export type CartData = {
   email: string
   name: string
   phone: string
+  totalSum: number
 }
 
 export type Category = 'all' | 'cabinet' | 'cushioned'

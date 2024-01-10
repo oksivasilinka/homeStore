@@ -33,6 +33,8 @@ export function App() {
       const newValue = JSON.parse(valueString)
 
       dispatch(setCart(newValue))
+
+      localStorage.setItem('cart', JSON.stringify(cart))
     }
   }, [dispatch, cart])
 
@@ -44,7 +46,7 @@ export function App() {
           <Route element={<Catalog pageSize={pageSize} />} path={'/'} />
           <Route element={<SignIn />} path={'/sign-in'} />
           <Route element={<Login />} path={'/login'} />
-          <Route element={<Cart cart={cart} />} path={'/cart'} />
+          <Route element={<Cart cart={cart} totalSum={totalSum} />} path={'/cart'} />
         </Routes>
       </Container>
     </ThemeProvider>

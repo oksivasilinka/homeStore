@@ -81,5 +81,6 @@ export const CartStory: Story = {
         totalSum: 645,
       },
     ],
+    totalSum: 1500,
   },
 }

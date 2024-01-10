@@ -1,8 +1,7 @@
 import { useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
 
+import { EmptyCart, ProductsItem } from '@/pages'
 import { CartForm } from '@/pages/cart/cartForm'
-import { ProductsInCart } from '@/pages/cart/productsInCart'
 import { ProductInCart, setCurrentPage, setFilter, useAppDispatch, useAuth } from '@/services'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -11,11 +10,11 @@ import s from './cart.module.scss'
 
 type Props = {
   cart: ProductInCart[]
+  totalSum: number
 }
 
-export const Cart = ({ cart }: Props) => {
+export const Cart = ({ cart, totalSum }: Props) => {
   const { isAuth } = useAuth()
-  const totalSum = cart.map(el => el.totalSum).reduce((a, b) => a + b, 0)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -30,36 +29,23 @@ export const Cart = ({ cart }: Props) => {
       </Typography>
       <Box className={s.wrapper}>
         {!isAuth && (
-          <Box className={s.emptyCart}>
-            <Typography variant={'h6'}>Войдите в ваш аккаунт или зарегистрируйтесь</Typography>
-            <NavLink to={'/sign-in'}>
-              <Typography variant={'body2'}>Зарегистрироваться и войти</Typography>
-            </NavLink>
-          </Box>
+          <EmptyCart
+            link={'Зарегистрироваться и войти'}
+            path={'/sign-in'}
+            title={'Войдите в ваш аккаунт или зарегистрируйтесь'}
+          />
         )}
         {!!totalSum && isAuth && (
           <>
             <Box className={s.wrapperProducts}>
-              {cart.map(p => (
-                <ProductsInCart key={p.name} product={p} />
-              ))}
-              <>
-                <Typography variant={'h5'}>Итого {totalSum || 0} руб.</Typography>
-              </>
+              {cart?.map(p => <ProductsItem key={p.name} product={p} />)}
+              <Typography variant={'h5'}>Итого {totalSum || 0} руб.</Typography>
             </Box>
-
-            <Box>
-              <CartForm />
-            </Box>
+            <CartForm totalSum={totalSum} />
           </>
         )}
         {!totalSum && (
-          <Box className={s.emptyCart}>
-            <Typography variant={'h6'}>Ваша корзина пуста</Typography>
-            <NavLink to={'/'}>
-              <Typography variant={'body2'}>Вернуться в каталог</Typography>
-            </NavLink>
-          </Box>
+          <EmptyCart link={'Вернуться в каталог'} path={'/'} title={'Ваша корзина пуста'} />
         )}
       </Box>
     </>
