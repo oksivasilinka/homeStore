@@ -1,6 +1,6 @@
 import { auth, googleProvider } from '@/config/firebase'
-import { Error, SignInFormData, setError } from '@/services'
-import { Dispatch, PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { AppDispatch, AuthData, ErrorData, SignInFormData, setError } from '@/services'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
@@ -9,9 +9,26 @@ import {
 } from 'firebase/auth'
 
 const slice = createSlice({
+  extraReducers: builder => {
+    builder
+      .addCase(signIn.fulfilled, (state, action) => {
+        state.email = action.payload.email
+        state.token = action.payload.token
+        state.id = action.payload.id
+      })
+      .addCase(signInWithGoogle.fulfilled, (state, action) => {
+        state.email = action.payload.email
+        state.token = action.payload.token
+        state.id = action.payload.id
+      })
+      .addCase(login.fulfilled, state => {
+        state.isLoggedIn = true
+      })
+  },
   initialState: {
     email: null as null | string,
     id: null as null | string,
+    isLoggedIn: false,
     token: null as null | string,
   },
   name: 'auth',
@@ -20,59 +37,79 @@ const slice = createSlice({
       state.email = null
       state.token = null
       state.id = null
-    },
-    setUser: (
-      state,
-      action: PayloadAction<{ email: null | string; id: string; token: string }>
-    ) => {
-      state.email = action.payload.email
-      state.token = action.payload.token
-      state.id = action.payload.id
+      state.isLoggedIn = false
     },
   },
 })
 
-export const login = (formData: SignInFormData) => async (dispatch: Dispatch) => {
+export const login = createAsyncThunk<
+  { email: string; id: string; token: string },
+  SignInFormData,
+  any
+>('auth/login', async (formData: SignInFormData, { dispatch, rejectWithValue }) => {
   try {
     await createUserWithEmailAndPassword(auth, formData.email, formData.password)
     dispatch(setError({ error: null }))
 
-    return auth
+    if (auth.currentUser?.uid && auth.currentUser.refreshToken) {
+      return {
+        email: formData.email,
+        id: auth.currentUser.uid,
+        token: auth.currentUser.refreshToken,
+      }
+    }
   } catch (e: unknown) {
-    if (e as Error) {
-      if ((e as Error).code === 'auth/email-already-in-use') {
+    if (e as ErrorData) {
+      if ((e as ErrorData).code === 'auth/email-already-in-use') {
         dispatch(setError({ error: 'Пользователь с таким email уже существует' }))
+      } else {
+        throw new Error('Произошла ошибка')
       }
     } else {
       dispatch(setError({ error: 'Произошла ошибка' }))
     }
   }
-}
 
-export const signIn = (formData: SignInFormData) => async (dispatch: Dispatch) => {
+  return rejectWithValue(null)
+})
+
+export const signIn = createAsyncThunk<
+  AuthData,
+  SignInFormData,
+  {
+    dispatch: AppDispatch
+    rejectValue: null
+  }
+>('auth/signIn', async (formData: SignInFormData, { dispatch, rejectWithValue }) => {
   try {
     const data = await signInWithEmailAndPassword(auth, formData.email, formData.password)
 
-    dispatch(
-      setUser({
-        email: data.user.email,
-        id: data.user.uid,
-        token: data.user.refreshToken,
-      })
-    )
     dispatch(setError({ error: null }))
+
+    return { email: data.user.email, id: data.user.uid, token: data.user.refreshToken }
   } catch (e: unknown) {
-    if (e as Error) {
-      if ((e as Error).code === 'auth/invalid-login-credentials') {
+    if (e as ErrorData) {
+      if ((e as ErrorData).code === 'auth/invalid-login-credentials') {
         dispatch(setError({ error: 'Неверный email или пароль' }))
+      } else {
+        throw new Error('Произошла ошибка')
       }
     } else {
       dispatch(setError({ error: 'Произошла ошибка' }))
     }
-  }
-}
 
-export const signInWithGoogle = () => async (dispatch: Dispatch) => {
+    return rejectWithValue(null)
+  }
+})
+
+export const signInWithGoogle = createAsyncThunk<
+  AuthData,
+  void,
+  {
+    dispatch: AppDispatch
+    rejectWithValue: null
+  }
+>('auth/signInWithGoogle', async (_, { dispatch, rejectWithValue }) => {
   try {
     const data = await signInWithPopup(auth, googleProvider)
     const credential = GoogleAuthProvider.credentialFromResult(data)
@@ -81,13 +118,17 @@ export const signInWithGoogle = () => async (dispatch: Dispatch) => {
     const email = user?.email
     const id = user?.uid
 
-    if (token) {
-      dispatch(setUser({ email, id, token }))
+    if (!token) {
+      return rejectWithValue(null)
+    } else {
+      return { email, id, token }
     }
   } catch (e) {
     dispatch(setError({ error: 'Произошла ошибка' }))
   }
-}
+
+  return rejectWithValue(null)
+})
 
 export const authSlice = slice.reducer
-export const { logout, setUser } = slice.actions
+export const { logout } = slice.actions

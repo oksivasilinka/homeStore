@@ -19,7 +19,7 @@ export const Login = () => {
   const onSubmit = (formData: SignInFormData) => {
     dispatch(login(formData))
       .then(res => {
-        if (res?.currentUser?.uid) {
+        if (res.meta.requestId) {
           navigate('/sign-in')
         }
       })

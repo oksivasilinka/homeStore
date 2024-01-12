@@ -25,6 +25,12 @@ export type SignInFormData = {
   password: string
 }
 
-export type Error = {
+export type ErrorData = {
   code: string
+}
+
+export type AuthData = {
+  email: null | string
+  id: string
+  token: string
 }
