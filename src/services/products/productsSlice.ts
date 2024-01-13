@@ -1,11 +1,16 @@
 import { db } from '@/config/firebase'
-import { Category, ProductInCart } from '@/services'
+import { Category, ErrorData, ProductInCart } from '@/services'
 import { filterProducts } from '@/services/utils/filterProducts'
 import { paginationProducts } from '@/services/utils/paginationProducts'
-import { Dispatch, PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { Dispatch, PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { collection, getDocs } from 'firebase/firestore'
 
 const slice = createSlice({
+  extraReducers: builder => {
+    builder.addCase(getProducts.fulfilled, (state, action) => {
+      state.products = action.payload.products
+    })
+  },
   initialState: {
     currentPage: 1 as number,
     filter: 'all' as Category,
@@ -23,14 +28,19 @@ const slice = createSlice({
     setPageCount: (state, action: PayloadAction<{ pageCount: number }>) => {
       state.pageCount = action.payload.pageCount
     },
-    setProducts: (state, action: PayloadAction<{ products: any[] }>) => {
-      state.products = action.payload.products
-    },
   },
 })
 
-export const getProducts =
-  (currentPage: number, pageSize: number, filter: Category) => async (dispatch: Dispatch) => {
+export const getProducts = createAsyncThunk<
+  any,
+  { currentPage: number; filter: Category; pageSize: number },
+  {
+    dispatch: Dispatch
+    rejectWithValue: ErrorData | null
+  }
+>(
+  'products/getProducts',
+  async ({ currentPage, filter, pageSize }, { dispatch, rejectWithValue }) => {
     try {
       const productsCollectionRef = collection(db, 'product')
       const data = await getDocs(productsCollectionRef)
@@ -44,13 +54,15 @@ export const getProducts =
         currentPage
       )
 
-      dispatch(setProducts({ products: productsInPage }))
       dispatch(setPageCount({ pageCount }))
       dispatch(setCurrentPage({ currentPage: updatedCurrentPage }))
+
+      return { products: productsInPage }
     } catch (e) {
-      console.log(e)
+      return rejectWithValue(null)
     }
   }
+)
 
 export const productsSlice = slice.reducer
-export const { setCurrentPage, setFilter, setPageCount, setProducts } = slice.actions
+export const { setCurrentPage, setFilter, setPageCount } = slice.actions

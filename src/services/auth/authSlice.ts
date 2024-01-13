@@ -1,6 +1,6 @@
 import { auth, googleProvider } from '@/config/firebase'
-import { AppDispatch, AuthData, ErrorData, SignInFormData, setError } from '@/services'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { AuthData, ErrorData, SignInFormData, setError } from '@/services'
+import { Dispatch, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
@@ -45,7 +45,10 @@ const slice = createSlice({
 export const login = createAsyncThunk<
   { email: string; id: string; token: string },
   SignInFormData,
-  any
+  {
+    dispatch: Dispatch
+    rejectWithValue: ErrorData | null
+  }
 >('auth/login', async (formData: SignInFormData, { dispatch, rejectWithValue }) => {
   try {
     await createUserWithEmailAndPassword(auth, formData.email, formData.password)
@@ -77,8 +80,8 @@ export const signIn = createAsyncThunk<
   AuthData,
   SignInFormData,
   {
-    dispatch: AppDispatch
-    rejectValue: null
+    dispatch: Dispatch
+    rejectWithValue: ErrorData | null
   }
 >('auth/signIn', async (formData: SignInFormData, { dispatch, rejectWithValue }) => {
   try {
@@ -106,8 +109,8 @@ export const signInWithGoogle = createAsyncThunk<
   AuthData,
   void,
   {
-    dispatch: AppDispatch
-    rejectWithValue: null
+    dispatch: Dispatch
+    rejectWithValue: ErrorData | null
   }
 >('auth/signInWithGoogle', async (_, { dispatch, rejectWithValue }) => {
   try {
