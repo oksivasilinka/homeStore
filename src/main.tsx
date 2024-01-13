@@ -2,8 +2,9 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 
-import { store } from '@/services/store'
+import { persistor, store } from '@/services/store'
 import ReactDOM from 'react-dom/client'
+import { PersistGate } from 'redux-persist/integration/react'
 
 import './config/firebase'
 import './styles/index.scss'
@@ -16,7 +17,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <App />
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+        </PersistGate>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>

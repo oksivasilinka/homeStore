@@ -15,11 +15,13 @@ const slice = createSlice({
         state.email = action.payload.email
         state.token = action.payload.token
         state.id = action.payload.id
+        state.isLoggedIn = true
       })
       .addCase(signInWithGoogle.fulfilled, (state, action) => {
         state.email = action.payload.email
         state.token = action.payload.token
         state.id = action.payload.id
+        state.isLoggedIn = true
       })
       .addCase(login.fulfilled, state => {
         state.isLoggedIn = true

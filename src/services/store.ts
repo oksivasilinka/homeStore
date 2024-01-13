@@ -1,32 +1,48 @@
 import { useDispatch } from 'react-redux'
 
 import { appSlice, authSlice, cartSlice, productsSlice } from '@/services'
-import { configureStore } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+  persistReducer,
+  persistStore,
+} from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 
-let preloadedState
-const persistedValuesString = localStorage.getItem('state')
+const rootReducer = combineReducers({
+  app: appSlice,
+  auth: authSlice,
+  cart: cartSlice,
+  products: productsSlice,
+})
 
-if (persistedValuesString) {
-  preloadedState = JSON.parse(persistedValuesString)
+const persistConfig = {
+  blacklist: ['app', 'products'],
+  key: 'root',
+  storage,
 }
 
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
 export const store = configureStore({
-  preloadedState,
-  reducer: {
-    app: appSlice,
-    auth: authSlice,
-    cart: cartSlice,
-    products: productsSlice,
-  },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+  reducer: persistedReducer,
 })
+export const persistor = persistStore(store)
 
 export type AppRootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 export const useAppDispatch = useDispatch<AppDispatch>
-
-store.subscribe(() => {
-  localStorage.setItem('state', JSON.stringify(store.getState()))
-})
 
 // @ts-ignore
 window.store = store
