@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 import { AuthForm } from '@/components'
 import { AuthWithGoogle } from '@/pages'
-import { SignInFormData, login, setError, useAppDispatch } from '@/services'
+import { SignInFormData, isLoggedInSelector, login, setError, useAppDispatch } from '@/services'
 import Typography from '@mui/material/Typography'
 
 import s from './login.module.scss'
@@ -11,23 +12,18 @@ import s from './login.module.scss'
 export const Login = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+  const isLoggedIn = useSelector(isLoggedInSelector)
 
   useEffect(() => {
     dispatch(setError({ error: null }))
   }, [])
 
   const onSubmit = (formData: SignInFormData) => {
-    dispatch(login(formData))
-      .then(res => {
-        if (res.meta.requestId) {
-          navigate('/sign-in')
-        }
-      })
-      .catch((e: unknown) => {
-        const err = e as string
-
-        dispatch(setError({ error: err }))
-      })
+    dispatch(login(formData)).then(() => {
+      if (isLoggedIn) {
+        navigate('/sign-in')
+      }
+    })
   }
 
   return (

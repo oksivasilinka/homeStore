@@ -1,5 +1,5 @@
 import { auth, googleProvider } from '@/config/firebase'
-import { AuthData, ErrorData, SignInFormData, setError } from '@/services'
+import { AuthData, ErrorData, SignInFormData, firebaseErrorHandler, setError } from '@/services'
 import { Dispatch, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
   GoogleAuthProvider,
@@ -64,15 +64,9 @@ export const login = createAsyncThunk<
       }
     }
   } catch (e: unknown) {
-    if (e as ErrorData) {
-      if ((e as ErrorData).code === 'auth/email-already-in-use') {
-        dispatch(setError({ error: 'Пользователь с таким email уже существует' }))
-      } else {
-        throw new Error('Произошла ошибка')
-      }
-    } else {
-      dispatch(setError({ error: 'Произошла ошибка' }))
-    }
+    firebaseErrorHandler(e, dispatch, {
+      'auth/email-already-in-use': 'Пользователь с таким email уже существует',
+    })
   }
 
   return rejectWithValue(null)
@@ -93,15 +87,9 @@ export const signIn = createAsyncThunk<
 
     return { email: data.user.email, id: data.user.uid, token: data.user.refreshToken }
   } catch (e: unknown) {
-    if (e as ErrorData) {
-      if ((e as ErrorData).code === 'auth/invalid-login-credentials') {
-        dispatch(setError({ error: 'Неверный email или пароль' }))
-      } else {
-        throw new Error('Произошла ошибка')
-      }
-    } else {
-      dispatch(setError({ error: 'Произошла ошибка' }))
-    }
+    firebaseErrorHandler(e, dispatch, {
+      'auth/invalid-login-credentials': 'Неверный email или пароль',
+    })
 
     return rejectWithValue(null)
   }
@@ -129,7 +117,7 @@ export const signInWithGoogle = createAsyncThunk<
       return { email, id, token }
     }
   } catch (e) {
-    dispatch(setError({ error: 'Произошла ошибка' }))
+    firebaseErrorHandler(e, dispatch)
   }
 
   return rejectWithValue(null)
