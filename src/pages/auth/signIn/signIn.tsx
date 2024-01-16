@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 import { AuthForm } from '@/components'
 import { AuthWithGoogle } from '@/pages'
-import { SignInFormData, setError, signIn, useAppDispatch } from '@/services'
+import { SignInFormData, authThunks, setError, useAppDispatch } from '@/services'
 import Typography from '@mui/material/Typography'
 
 import s from './signIn.module.scss'
@@ -14,6 +14,7 @@ export const SignIn = () => {
   }, [])
 
   const dispatch = useAppDispatch()
+  const { signIn } = authThunks
 
   const onSubmit = async (formData: SignInFormData) => {
     try {

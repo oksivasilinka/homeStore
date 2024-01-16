@@ -1,8 +1,9 @@
 import { db } from '@/config/firebase'
-import { Category, ErrorData, ProductInCart, firebaseErrorHandler } from '@/services'
+import { Category, ProductInCart, firebaseErrorHandler } from '@/services'
+import { createAppAsyncThunk } from '@/services/utils/createAppAsyncThunk'
 import { filterProducts } from '@/services/utils/filterProducts'
 import { paginationProducts } from '@/services/utils/paginationProducts'
-import { Dispatch, PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { collection, getDocs } from 'firebase/firestore'
 
 const slice = createSlice({
@@ -33,13 +34,9 @@ const slice = createSlice({
   },
 })
 
-export const getProducts = createAsyncThunk<
+const getProducts = createAppAsyncThunk<
   { currentPage: number; pageCount: number; products: ProductInCart[] },
-  { currentPage: number; filter: Category; pageSize: number },
-  {
-    dispatch: Dispatch
-    rejectWithValue: ErrorData | null
-  }
+  { currentPage: number; filter: Category; pageSize: number }
 >(
   'products/getProducts',
   async ({ currentPage, filter, pageSize }, { dispatch, rejectWithValue }) => {
@@ -73,3 +70,4 @@ export const getProducts = createAsyncThunk<
 
 export const productsSlice = slice.reducer
 export const { setCurrentPage, setFilter } = slice.actions
+export const productsThunks = { getProducts }

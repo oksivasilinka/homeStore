@@ -29,8 +29,15 @@ export type ErrorData = {
   code: string
 }
 
-export type AuthData = {
+export type AuthData = AuthBaseData & {
   email: null | string
+}
+
+export type LoginData = AuthBaseData & {
+  email: string
+}
+
+export type AuthBaseData = {
   id: string
   token: string
 }

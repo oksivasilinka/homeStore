@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { CategoryFilter } from '@/components'
 import { ProductCard } from '@/pages'
-import { getProducts, setCurrentPage, useAppDispatch, useAuth } from '@/services'
+import { productsThunks, setCurrentPage, useAppDispatch, useAuth } from '@/services'
 import {
   currentPageSelector,
   filterSelector,
@@ -28,6 +28,7 @@ export const Catalog = ({ pageSize }: Props) => {
   const filter = useSelector(filterSelector)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const { getProducts } = productsThunks
 
   useEffect(() => {
     if (!isAuth) {

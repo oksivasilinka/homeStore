@@ -1,13 +1,14 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { signInWithGoogle, useAppDispatch, useAuth } from '@/services'
+import { authThunks, useAppDispatch, useAuth } from '@/services'
 import Button from '@mui/material/Button'
 
 export const AuthWithGoogle = () => {
   const navigate = useNavigate()
   const { isAuth } = useAuth()
   const dispatch = useAppDispatch()
+  const { signInWithGoogle } = authThunks
 
   useEffect(() => {
     if (isAuth) {

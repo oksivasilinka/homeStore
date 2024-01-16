@@ -1,6 +1,7 @@
 import { auth, googleProvider } from '@/config/firebase'
-import { AuthData, ErrorData, SignInFormData, firebaseErrorHandler, setError } from '@/services'
-import { Dispatch, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { AuthData, LoginData, SignInFormData, firebaseErrorHandler, setError } from '@/services'
+import { createAppAsyncThunk } from '@/services/utils/createAppAsyncThunk'
+import { createSlice } from '@reduxjs/toolkit'
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
@@ -44,84 +45,73 @@ const slice = createSlice({
   },
 })
 
-export const login = createAsyncThunk<
-  { email: string; id: string; token: string },
-  SignInFormData,
-  {
-    dispatch: Dispatch
-    rejectWithValue: ErrorData | null
-  }
->('auth/login', async (formData: SignInFormData, { dispatch, rejectWithValue }) => {
-  try {
-    await createUserWithEmailAndPassword(auth, formData.email, formData.password)
-    dispatch(setError({ error: null }))
+const login = createAppAsyncThunk<LoginData, SignInFormData>(
+  'auth/login',
+  async (formData: SignInFormData, { dispatch, rejectWithValue }) => {
+    try {
+      await createUserWithEmailAndPassword(auth, formData.email, formData.password)
+      dispatch(setError({ error: null }))
 
-    if (auth.currentUser?.uid && auth.currentUser.refreshToken) {
-      return {
-        email: formData.email,
-        id: auth.currentUser.uid,
-        token: auth.currentUser.refreshToken,
+      if (auth.currentUser?.uid && auth.currentUser.refreshToken) {
+        return {
+          email: formData.email,
+          id: auth.currentUser.uid,
+          token: auth.currentUser.refreshToken,
+        }
       }
+    } catch (e: unknown) {
+      firebaseErrorHandler(e, dispatch, {
+        'auth/email-already-in-use': 'Пользователь с таким email уже существует',
+      })
     }
-  } catch (e: unknown) {
-    firebaseErrorHandler(e, dispatch, {
-      'auth/email-already-in-use': 'Пользователь с таким email уже существует',
-    })
-  }
-
-  return rejectWithValue(null)
-})
-
-export const signIn = createAsyncThunk<
-  AuthData,
-  SignInFormData,
-  {
-    dispatch: Dispatch
-    rejectWithValue: ErrorData | null
-  }
->('auth/signIn', async (formData: SignInFormData, { dispatch, rejectWithValue }) => {
-  try {
-    const data = await signInWithEmailAndPassword(auth, formData.email, formData.password)
-
-    dispatch(setError({ error: null }))
-
-    return { email: data.user.email, id: data.user.uid, token: data.user.refreshToken }
-  } catch (e: unknown) {
-    firebaseErrorHandler(e, dispatch, {
-      'auth/invalid-login-credentials': 'Неверный email или пароль',
-    })
 
     return rejectWithValue(null)
   }
-})
+)
 
-export const signInWithGoogle = createAsyncThunk<
-  AuthData,
-  void,
-  {
-    dispatch: Dispatch
-    rejectWithValue: ErrorData | null
-  }
->('auth/signInWithGoogle', async (_, { dispatch, rejectWithValue }) => {
-  try {
-    const data = await signInWithPopup(auth, googleProvider)
-    const credential = GoogleAuthProvider.credentialFromResult(data)
-    const token = credential?.accessToken
-    const user = data.user
-    const email = user?.email
-    const id = user?.uid
+const signIn = createAppAsyncThunk<AuthData, SignInFormData>(
+  'auth/signIn',
+  async (formData: SignInFormData, { dispatch, rejectWithValue }) => {
+    try {
+      const data = await signInWithEmailAndPassword(auth, formData.email, formData.password)
 
-    if (!token) {
+      dispatch(setError({ error: null }))
+
+      return { email: data.user.email, id: data.user.uid, token: data.user.refreshToken }
+    } catch (e: unknown) {
+      firebaseErrorHandler(e, dispatch, {
+        'auth/invalid-login-credentials': 'Неверный email или пароль',
+      })
+
       return rejectWithValue(null)
-    } else {
-      return { email, id, token }
     }
-  } catch (e) {
-    firebaseErrorHandler(e, dispatch)
   }
+)
 
-  return rejectWithValue(null)
-})
+const signInWithGoogle = createAppAsyncThunk<AuthData, void>(
+  'auth/signInWithGoogle',
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const data = await signInWithPopup(auth, googleProvider)
+      const credential = GoogleAuthProvider.credentialFromResult(data)
+      const token = credential?.accessToken
+      const user = data.user
+      const email = user?.email
+      const id = user?.uid
+
+      if (!token) {
+        return rejectWithValue(null)
+      } else {
+        return { email, id, token }
+      }
+    } catch (e) {
+      firebaseErrorHandler(e, dispatch)
+    }
+
+    return rejectWithValue(null)
+  }
+)
 
 export const authSlice = slice.reducer
 export const { logout } = slice.actions
+export const authThunks = { login, signIn, signInWithGoogle }

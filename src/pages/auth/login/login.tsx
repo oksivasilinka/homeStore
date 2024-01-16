@@ -4,7 +4,13 @@ import { NavLink, useNavigate } from 'react-router-dom'
 
 import { AuthForm } from '@/components'
 import { AuthWithGoogle } from '@/pages'
-import { SignInFormData, isLoggedInSelector, login, setError, useAppDispatch } from '@/services'
+import {
+  SignInFormData,
+  authThunks,
+  isLoggedInSelector,
+  setError,
+  useAppDispatch,
+} from '@/services'
 import Typography from '@mui/material/Typography'
 
 import s from './login.module.scss'
@@ -13,6 +19,7 @@ export const Login = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const isLoggedIn = useSelector(isLoggedInSelector)
+  const { login } = authThunks
 
   useEffect(() => {
     dispatch(setError({ error: null }))
