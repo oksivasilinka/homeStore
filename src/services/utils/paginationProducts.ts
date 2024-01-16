@@ -1,7 +1,7 @@
+import { ProductInCart } from '@/services'
+
 export const paginationProducts = (
-  products: {
-    id: string
-  }[],
+  products: ProductInCart[],
   pageSize: number,
   currentPage: number
 ) => {

@@ -1,5 +1,5 @@
 import { db } from '@/config/firebase'
-import { Category, ErrorData, ProductInCart } from '@/services'
+import { Category, ErrorData, ProductInCart, firebaseErrorHandler } from '@/services'
 import { filterProducts } from '@/services/utils/filterProducts'
 import { paginationProducts } from '@/services/utils/paginationProducts'
 import { Dispatch, PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
@@ -9,6 +9,8 @@ const slice = createSlice({
   extraReducers: builder => {
     builder.addCase(getProducts.fulfilled, (state, action) => {
       state.products = action.payload.products
+      state.currentPage = action.payload.currentPage
+      state.pageCount = action.payload.pageCount
     })
   },
   initialState: {
@@ -32,7 +34,7 @@ const slice = createSlice({
 })
 
 export const getProducts = createAsyncThunk<
-  any,
+  { currentPage: number; pageCount: number; products: ProductInCart[] },
   { currentPage: number; filter: Category; pageSize: number },
   {
     dispatch: Dispatch
@@ -45,7 +47,13 @@ export const getProducts = createAsyncThunk<
       const productsCollectionRef = collection(db, 'product')
       const data = await getDocs(productsCollectionRef)
 
-      const productsData = data.docs.map(doc => ({ ...doc.data(), id: doc.id }))
+      const productsData: ProductInCart[] = data.docs.map(doc => {
+        const product = doc.data() as ProductInCart
+
+        product.id = doc.id
+
+        return product
+      })
 
       const filteredProducts = filterProducts(productsData, filter)
       const { pageCount, productsInPage, updatedCurrentPage } = paginationProducts(
@@ -54,15 +62,14 @@ export const getProducts = createAsyncThunk<
         currentPage
       )
 
-      dispatch(setPageCount({ pageCount }))
-      dispatch(setCurrentPage({ currentPage: updatedCurrentPage }))
-
-      return { products: productsInPage }
+      return { currentPage: updatedCurrentPage, pageCount, products: productsInPage }
     } catch (e) {
-      return rejectWithValue(null)
+      firebaseErrorHandler(e, dispatch)
     }
+
+    return rejectWithValue(null)
   }
 )
 
 export const productsSlice = slice.reducer
-export const { setCurrentPage, setFilter, setPageCount } = slice.actions
+export const { setCurrentPage, setFilter } = slice.actions

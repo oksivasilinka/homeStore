@@ -1,8 +1,8 @@
-import { Category } from '@/services'
+import { Category, ProductInCart } from '@/services'
 
-export const filterProducts = (products: { id: string }[], filter: Category) => {
+export const filterProducts = (products: ProductInCart[], filter: Category) => {
   if (filter !== 'all') {
-    return products.filter((el: any) => el.category === filter)
+    return products.filter((el: ProductInCart) => el.category === filter)
   } else {
     return products
   }
