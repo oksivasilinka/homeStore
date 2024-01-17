@@ -40,8 +40,6 @@ body {
   background-color: var(--color-dark-900);
 }
 
-a.text:active,
-a.text:hover,
-a.text {
-  color: #442c2e;
+a:-webkit-any-link {
+  color: inherit;
 }
