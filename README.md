@@ -16,6 +16,7 @@ This project is hosted on the Vercel platform and is available at https://home-s
 - **Storybook**: Storybook is used for developing and testing UI components in isolation. It allows developers to create and showcase components independently, making iteration easier and ensuring UI consistency.
 - **Material-UI**: HomeStore utilizes Material-UI, a popular React UI component library that provides a set of pre-built components with a modern and visually appealing design.
 - **Yup**: library for data validation in JavaScript.
+- **Redux Persist**: the Redux state persistence library in a React/Redux application allows you to persist state across sessions by storing it in storage such as localStorage.
 - **Firebase**: Google application development platform.
 - **PNPM**: fast package manager for JavaScript.
 - **Vite**: fast tool for web application development.
