@@ -1,4 +1,4 @@
-#HomeStore
+# HomeStore
 
 HomeStore is an online furniture store that is under active development.
 The project is being developed using TypeScript and the React library.
