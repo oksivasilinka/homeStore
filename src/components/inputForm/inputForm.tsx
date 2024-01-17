@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography'
 import s from './inpuForm.module.scss'
 
 type Props = {
+  autocomplete?: string
   control: Control<any>
   error: string | undefined
   label: string
@@ -16,7 +17,7 @@ type Props = {
 }
 
 export const ItemForm = forwardRef<HTMLInputElement, Props>(
-  ({ control, error, label, name, placeholder, type }, ref) => {
+  ({ autocomplete, control, error, label, name, placeholder, type }, ref) => {
     return (
       <div className={s.itemForm}>
         <Controller
@@ -26,6 +27,7 @@ export const ItemForm = forwardRef<HTMLInputElement, Props>(
           render={({ field }) => (
             <TextField
               {...field}
+              autoComplete={autocomplete}
               error={!!error}
               label={label}
               placeholder={placeholder}

@@ -35,6 +35,7 @@ export const AuthForm = ({ onSubmit, title, titleButton }: Props) => {
         {title}
       </Typography>
       <ItemForm
+        autocomplete={'on'}
         control={control}
         error={errors.email?.message || error || undefined}
         label={'Ваш email'}
@@ -42,6 +43,7 @@ export const AuthForm = ({ onSubmit, title, titleButton }: Props) => {
         placeholder={'Email'}
       />
       <ItemForm
+        autocomplete={'on'}
         control={control}
         error={errors.password?.message || error || undefined}
         label={'Ваш пароль'}
