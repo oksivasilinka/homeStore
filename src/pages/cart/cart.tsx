@@ -2,8 +2,16 @@ import { useEffect } from 'react'
 
 import { EmptyCart, ProductsItem } from '@/pages'
 import { CartForm } from '@/pages/cart/cartForm'
-import { ProductInCart, setCurrentPage, setFilter, useAppDispatch, useAuth } from '@/services'
+import {
+  ProductInCart,
+  clearCart,
+  setCurrentPage,
+  setFilter,
+  useAppDispatch,
+  useAuth,
+} from '@/services'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 import s from './cart.module.scss'
@@ -22,6 +30,10 @@ export const Cart = ({ cart, totalSum }: Props) => {
     dispatch(setFilter({ filter: 'all' }))
   }, [])
 
+  const clearCardHandler = () => {
+    dispatch(clearCart())
+  }
+
   return (
     <>
       <Typography className={s.title} variant={'h4'}>
@@ -39,7 +51,10 @@ export const Cart = ({ cart, totalSum }: Props) => {
           <>
             <Box className={s.wrapperProducts}>
               {cart?.map(p => <ProductsItem key={p.name} product={p} />)}
-              <Typography variant={'h5'}>Итого {totalSum || 0} руб.</Typography>
+              <Box className={s.wrapperTotal}>
+                <Typography variant={'h5'}>Итого {totalSum || 0} руб.</Typography>
+                <Button onClick={clearCardHandler}>Очистить корзину</Button>
+              </Box>
             </Box>
             <CartForm totalSum={totalSum} />
           </>

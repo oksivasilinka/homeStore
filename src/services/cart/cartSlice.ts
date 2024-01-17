@@ -22,6 +22,9 @@ const slice = createSlice({
         })
       }
     },
+    clearCart: () => {
+      return []
+    },
     deleteProductInCart: (state, action: PayloadAction<{ product: ProductInCart }>) => {
       const index = state.findIndex(el => el.id === action.payload.product.id)
 
@@ -37,11 +40,11 @@ const slice = createSlice({
         }
       }
     },
-    setCart: (_, action: PayloadAction<{ product: ProductInCart }>) => {
+    setCart: (_, action: PayloadAction<{ product?: ProductInCart }>) => {
       action.payload.product
     },
   },
 })
 
 export const cartSlice = slice.reducer
-export const { addProductInCart, deleteProductInCart, setCart } = slice.actions
+export const { addProductInCart, clearCart, deleteProductInCart } = slice.actions
