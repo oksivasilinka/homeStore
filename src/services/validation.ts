@@ -20,7 +20,7 @@ const nameSchema = string()
   .max(30, 'Не более 30 символов')
 
 const phoneSchema = string()
-  .matches(phoneRegExp, 'Phone number is not valid')
+  .matches(phoneRegExp, 'Неверный формат')
   .required('Поле обязательно для заполнения')
 
 export const formSchema = object({
