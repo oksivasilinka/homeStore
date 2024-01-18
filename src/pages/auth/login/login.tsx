@@ -36,6 +36,7 @@ export const Login = () => {
   return (
     <div className={s.wrapper}>
       <AuthForm
+        login
         onSubmit={onSubmit}
         title={'Зарегистрироваться'}
         titleButton={'Зарегистрироваться'}

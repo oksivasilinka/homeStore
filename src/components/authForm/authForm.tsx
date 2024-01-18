@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 
 import { ItemForm } from '@/components'
-import { SignInFormData, errorSelector, signInSchema } from '@/services'
+import { SignInFormData, errorSelector, loginSchema, signInSchema } from '@/services'
 import { yupResolver } from '@hookform/resolvers/yup'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
@@ -10,23 +10,26 @@ import Typography from '@mui/material/Typography'
 import s from './authForm.module.scss'
 
 type Props = {
+  login?: boolean
   onSubmit: any
   title: string
   titleButton: string
 }
 
-export const AuthForm = ({ onSubmit, title, titleButton }: Props) => {
+export const AuthForm = ({ login, onSubmit, title, titleButton }: Props) => {
   const error = useSelector(errorSelector)
+  const schema = login ? loginSchema : signInSchema
   const {
     control,
     formState: { errors },
     handleSubmit,
   } = useForm<SignInFormData>({
     defaultValues: {
+      confirmPassword: '',
       email: '',
       password: '',
     },
-    resolver: yupResolver(signInSchema),
+    resolver: yupResolver(schema),
   })
 
   return (
@@ -51,6 +54,17 @@ export const AuthForm = ({ onSubmit, title, titleButton }: Props) => {
         placeholder={'Пароль'}
         type={'password'}
       />
+      {login && (
+        <ItemForm
+          autocomplete={'off'}
+          control={control}
+          error={errors.confirmPassword?.message || error || undefined}
+          label={'Повторите пароль'}
+          name={'confirmPassword'}
+          placeholder={'Повторите пароль'}
+          type={'password'}
+        />
+      )}
 
       <Button fullWidth type={'submit'} variant={'contained'}>
         {titleButton}

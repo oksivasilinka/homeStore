@@ -21,6 +21,7 @@ export type CartData = {
 export type Category = 'all' | 'cabinet' | 'cushioned'
 
 export type SignInFormData = {
+  confirmPassword?: string
   email: string
   password: string
 }
