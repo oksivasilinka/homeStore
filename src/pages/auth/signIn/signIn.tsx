@@ -3,7 +3,10 @@ import { NavLink } from 'react-router-dom'
 
 import { AuthForm } from '@/components'
 import { AuthWithGoogle } from '@/pages'
-import { SignInFormData, authThunks, setError, useAppDispatch } from '@/services'
+import { setError } from '@/services/app'
+import { authThunks } from '@/services/auth'
+import { useAppDispatch } from '@/services/store'
+import { SignInFormData } from '@/services/types'
 import Typography from '@mui/material/Typography'
 
 import s from './signIn.module.scss'

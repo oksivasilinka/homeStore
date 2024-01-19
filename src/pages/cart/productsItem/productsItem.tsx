@@ -1,5 +1,5 @@
 import { NumericInput } from '@/components'
-import { ProductInCart } from '@/services'
+import { ProductInCart } from '@/services/types'
 import { Card, CardActions } from '@mui/material'
 import Box from '@mui/material/Box'
 import CardContent from '@mui/material/CardContent'

@@ -1,4 +1,4 @@
-import { Category, ProductInCart } from '@/services'
+import { Category, ProductInCart } from '@/services/types'
 
 export const filterProducts = (products: ProductInCart[], filter: Category) => {
   if (filter !== 'all') {

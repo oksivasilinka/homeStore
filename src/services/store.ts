@@ -1,6 +1,9 @@
 import { useDispatch } from 'react-redux'
 
-import { appSlice, authSlice, cartSlice, productsSlice } from '@/services'
+import { appSlice } from '@/services/app'
+import { authSlice } from '@/services/auth'
+import { cartSlice } from '@/services/cart'
+import { productsSlice } from '@/services/products'
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import {
   FLUSH,
@@ -38,6 +41,7 @@ export const store = configureStore({
     }),
   reducer: persistedReducer,
 })
+
 export const persistor = persistStore(store)
 
 export type AppRootState = ReturnType<typeof store.getState>

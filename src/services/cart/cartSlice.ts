@@ -1,4 +1,4 @@
-import { ProductInCart } from '@/services'
+import { ProductInCart } from '@/services/types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const slice = createSlice({

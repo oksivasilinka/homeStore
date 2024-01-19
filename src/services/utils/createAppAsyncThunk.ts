@@ -1,4 +1,5 @@
-import { AppDispatch, AppRootState, ErrorData } from '@/services'
+import { AppDispatch, AppRootState } from '@/services/store'
+import { ErrorData } from '@/services/types'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
 export const createAppAsyncThunk = createAsyncThunk.withTypes<{

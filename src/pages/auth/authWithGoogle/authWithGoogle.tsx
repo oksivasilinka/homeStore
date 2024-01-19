@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { authThunks, useAppDispatch, useAuth } from '@/services'
+import { authThunks } from '@/services/auth'
+import { useAuth } from '@/services/hooks'
+import { useAppDispatch } from '@/services/store'
 import Button from '@mui/material/Button'
 
 export const AuthWithGoogle = () => {

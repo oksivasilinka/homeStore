@@ -1,4 +1,6 @@
-import { ProductInCart, addProductInCart, useAppDispatch } from '@/services'
+import { addProductInCart } from '@/services/cart'
+import { useAppDispatch } from '@/services/store'
+import { ProductInCart } from '@/services/types'
 import { Card } from '@mui/material'
 import Button from '@mui/material/Button'
 import CardMedia from '@mui/material/CardMedia'

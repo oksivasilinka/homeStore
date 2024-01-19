@@ -1,7 +1,10 @@
 import { NavLink } from 'react-router-dom'
 
 import { auth } from '@/config/firebase'
-import { logout, setFilter, useAppDispatch, useAuth } from '@/services'
+import { logout } from '@/services/auth'
+import { useAuth } from '@/services/hooks'
+import { setFilter } from '@/services/products'
+import { useAppDispatch } from '@/services/store'
 import { Container } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'

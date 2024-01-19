@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
+
 import { Cart } from '@/pages'
+import { store } from '@/services/store'
 
 const meta = {
   component: Cart,
@@ -83,4 +87,13 @@ export const CartStory: Story = {
     ],
     totalSum: 1500,
   },
+  decorators: [
+    Story => (
+      <BrowserRouter>
+        <Provider store={store}>
+          <Story />
+        </Provider>
+      </BrowserRouter>
+    ),
+  ],
 }

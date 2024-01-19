@@ -1,6 +1,8 @@
 import { useSelector } from 'react-redux'
 
-import { Category, filterSelector, setFilter, useAppDispatch } from '@/services'
+import { filterSelector, setFilter } from '@/services/products'
+import { useAppDispatch } from '@/services/store'
+import { Category } from '@/services/types'
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 
 import s from './categoryFilter.module.scss'

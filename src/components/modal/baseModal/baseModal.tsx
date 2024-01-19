@@ -1,10 +1,10 @@
 import { ReactNode } from 'react'
 
-import { CartFormData } from '@/services'
 import { Modal } from '@mui/material'
 import Box from '@mui/material/Box'
 
 import s from './baseModal.module.scss'
+import { CartFormData } from '@/services/types.ts'
 
 type Props = {
   callback: () => void

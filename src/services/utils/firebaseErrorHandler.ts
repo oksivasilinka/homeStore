@@ -1,4 +1,5 @@
-import { ErrorData, setError } from '@/services'
+import { setError } from '@/services/app'
+import { ErrorData } from '@/services/types'
 import { Dispatch } from '@reduxjs/toolkit'
 
 export const firebaseErrorHandler = (

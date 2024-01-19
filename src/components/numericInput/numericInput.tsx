@@ -1,4 +1,6 @@
-import { ProductInCart, addProductInCart, deleteProductInCart, useAppDispatch } from '@/services'
+import { addProductInCart, deleteProductInCart } from '@/services/cart'
+import { useAppDispatch } from '@/services/store'
+import { ProductInCart } from '@/services/types'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import { IconButton } from '@mui/material'

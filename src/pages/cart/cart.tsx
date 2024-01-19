@@ -2,14 +2,11 @@ import { useEffect } from 'react'
 
 import { EmptyCart, ProductsItem } from '@/pages'
 import { CartForm } from '@/pages/cart/cartForm'
-import {
-  ProductInCart,
-  clearCart,
-  setCurrentPage,
-  setFilter,
-  useAppDispatch,
-  useAuth,
-} from '@/services'
+import { clearCart } from '@/services/cart'
+import { useAuth } from '@/services/hooks'
+import { setCurrentPage, setFilter } from '@/services/products'
+import { useAppDispatch } from '@/services/store'
+import { ProductInCart } from '@/services/types'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
@@ -56,7 +53,7 @@ export const Cart = ({ cart, totalSum }: Props) => {
                 <Button onClick={clearCardHandler}>Очистить корзину</Button>
               </Box>
             </Box>
-            <CartForm totalSum={totalSum} />
+            <CartForm clearCardHandler={clearCardHandler} totalSum={totalSum} />
           </>
         )}
         {!totalSum && (

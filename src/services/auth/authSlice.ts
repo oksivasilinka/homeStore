@@ -1,5 +1,7 @@
 import { auth, googleProvider } from '@/config/firebase'
-import { AuthData, LoginData, SignInFormData, firebaseErrorHandler, setError } from '@/services'
+import { setError } from '@/services/app'
+import { AuthData, LoginData, SignInFormData } from '@/services/types'
+import { firebaseErrorHandler } from '@/services/utils'
 import { createAppAsyncThunk } from '@/services/utils/createAppAsyncThunk'
 import { createSlice } from '@reduxjs/toolkit'
 import {

@@ -4,13 +4,10 @@ import { NavLink, useNavigate } from 'react-router-dom'
 
 import { AuthForm } from '@/components'
 import { AuthWithGoogle } from '@/pages'
-import {
-  SignInFormData,
-  authThunks,
-  isLoggedInSelector,
-  setError,
-  useAppDispatch,
-} from '@/services'
+import { setError } from '@/services/app'
+import { authThunks, isLoggedInSelector } from '@/services/auth'
+import { useAppDispatch } from '@/services/store'
+import { SignInFormData } from '@/services/types'
 import Typography from '@mui/material/Typography'
 
 import s from './login.module.scss'

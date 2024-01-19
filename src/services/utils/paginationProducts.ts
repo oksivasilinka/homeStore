@@ -1,4 +1,4 @@
-import { ProductInCart } from '@/services'
+import { ProductInCart } from '@/services/types'
 
 export const paginationProducts = (
   products: ProductInCart[],

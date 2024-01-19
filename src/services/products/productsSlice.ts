@@ -1,5 +1,6 @@
 import { db } from '@/config/firebase'
-import { Category, ProductInCart, firebaseErrorHandler } from '@/services'
+import { Category, ProductInCart } from '@/services/types'
+import { firebaseErrorHandler } from '@/services/utils'
 import { createAppAsyncThunk } from '@/services/utils/createAppAsyncThunk'
 import { filterProducts } from '@/services/utils/filterProducts'
 import { paginationProducts } from '@/services/utils/paginationProducts'

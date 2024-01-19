@@ -4,13 +4,17 @@ import { useNavigate } from 'react-router-dom'
 
 import { CategoryFilter } from '@/components'
 import { ProductCard } from '@/pages'
-import { productsThunks, setCurrentPage, useAppDispatch, useAuth } from '@/services'
+import { useAuth } from '@/services/hooks'
 import {
   currentPageSelector,
   filterSelector,
   pageCountSelector,
   productsSelector,
+  productsThunks,
+  setCurrentPage,
 } from '@/services/products'
+import { useAppDispatch } from '@/services/store'
+import { ProductInCart } from '@/services/types'
 import { Pagination } from '@mui/material'
 import Typography from '@mui/material/Typography'
 
@@ -55,7 +59,7 @@ export const Catalog = ({ pageSize }: Props) => {
           />
         </div>
         <div className={s.products}>
-          {products?.map(p => <ProductCard key={p.id} product={p} />)}
+          {products?.map((p: ProductInCart) => <ProductCard key={p.id} product={p} />)}
         </div>
       </div>
     </>

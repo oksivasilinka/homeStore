@@ -1,11 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
+
 import { ProductsItem } from '@/pages'
+import { store } from '@/services/store'
 
 const meta = {
   component: ProductsItem,
   tags: ['autodocs'],
-  title: 'Components/ProductsInCart',
+  title: 'Components/ProductsItem',
 } satisfies Meta<typeof ProductsItem>
 
 export default meta
@@ -24,4 +28,13 @@ export const ProductInCartStory: Story = {
       totalSum: 859,
     },
   },
+  decorators: [
+    Story => (
+      <BrowserRouter>
+        <Provider store={store}>
+          <Story />
+        </Provider>
+      </BrowserRouter>
+    ),
+  ],
 }
