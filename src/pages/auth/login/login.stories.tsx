@@ -1,12 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom'
-
 import { Login } from '@/pages'
-import { store } from '@/services/store'
-import { theme } from '@/styles'
-import { ThemeProvider } from '@mui/material/styles'
 
 const meta = {
   component: Login,
@@ -16,17 +10,7 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
+
 export const AuthStory: Story = {
   args: {},
-  decorators: [
-    Story => (
-      <BrowserRouter>
-        <Provider store={store}>
-          <ThemeProvider theme={theme}>
-            <Story />
-          </ThemeProvider>
-        </Provider>
-      </BrowserRouter>
-    ),
-  ],
 }
