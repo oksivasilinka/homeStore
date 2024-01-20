@@ -5,6 +5,8 @@ import { BrowserRouter } from 'react-router-dom'
 
 import { Login } from '@/pages'
 import { store } from '@/services/store'
+import { theme } from '@/styles'
+import { ThemeProvider } from '@mui/material/styles'
 
 const meta = {
   component: Login,
@@ -20,7 +22,9 @@ export const AuthStory: Story = {
     Story => (
       <BrowserRouter>
         <Provider store={store}>
-          <Story />
+          <ThemeProvider theme={theme}>
+            <Story />
+          </ThemeProvider>
         </Provider>
       </BrowserRouter>
     ),

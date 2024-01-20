@@ -5,6 +5,8 @@ import { BrowserRouter } from 'react-router-dom'
 
 import { ProductCard } from '@/pages'
 import { store } from '@/services/store'
+import { theme } from '@/styles'
+import { ThemeProvider } from '@mui/material/styles'
 
 const meta = {
   component: ProductCard,
@@ -32,7 +34,9 @@ export const ProductCardStory: Story = {
     Story => (
       <BrowserRouter>
         <Provider store={store}>
-          <Story />
+          <ThemeProvider theme={theme}>
+            <Story />
+          </ThemeProvider>
         </Provider>
       </BrowserRouter>
     ),
