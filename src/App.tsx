@@ -24,7 +24,7 @@ export function App() {
       <Header isAuth={isAuth} totalSum={totalSum} />
       <Container>
         <Routes>
-          <Route element={<Catalog pageSize={pageSize} />} path={'/'} />
+          <Route element={<Catalog isAuth={isAuth} pageSize={pageSize} />} path={'/'} />
           <Route element={<SignIn />} path={'/sign-in'} />
           <Route element={<Login />} path={'/login'} />
           <Route

@@ -8,7 +8,7 @@ import s from './inpuForm.module.scss'
 
 type Props = {
   autocomplete?: string
-  control: Control<any>
+  control?: Control<any>
   error: string | undefined
   label: string
   name: string

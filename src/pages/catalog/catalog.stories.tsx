@@ -5,13 +5,14 @@ import { Catalog } from '@/pages'
 const meta = {
   component: Catalog,
   tags: ['autodocs'],
-  title: 'Components/Catalog',
+  title: 'Pages/Catalog',
 } satisfies Meta<typeof Catalog>
 
 export default meta
 type Story = StoryObj<typeof meta>
-export const ProductCardsListStory: Story = {
+export const CatalogStory: Story = {
   args: {
+    isAuth: true,
     pageSize: 9,
   },
 }
