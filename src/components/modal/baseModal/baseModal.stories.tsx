@@ -16,6 +16,7 @@ const data = {
   phone: '8-029-333-33-33',
   totalSum: 1500,
 }
+
 export const ModalConfirmOrderStory: Story = {
   args: {
     isOpen: true,
