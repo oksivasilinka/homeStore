@@ -2,7 +2,6 @@ import { NavLink } from 'react-router-dom'
 
 import { auth } from '@/config/firebase'
 import { logout } from '@/services/auth'
-import { useAuth } from '@/services/hooks'
 import { setFilter } from '@/services/products'
 import { useAppDispatch } from '@/services/store'
 import { Container } from '@mui/material'
@@ -16,10 +15,10 @@ import { signOut } from 'firebase/auth'
 import s from './header.module.scss'
 
 type Props = {
+  isAuth: boolean
   totalSum: number
 }
-export const Header = ({ totalSum }: Props) => {
-  const { isAuth } = useAuth()
+export const Header = ({ isAuth, totalSum }: Props) => {
   const dispatch = useAppDispatch()
 
   const logoutHandler = async () => {
