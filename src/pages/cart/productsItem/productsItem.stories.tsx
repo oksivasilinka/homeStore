@@ -5,7 +5,7 @@ import { ProductsItem } from '@/pages'
 const meta = {
   component: ProductsItem,
   tags: ['autodocs'],
-  title: 'Components/ProductsItem',
+  title: 'Components/ProductInCartStory',
 } satisfies Meta<typeof ProductsItem>
 
 export default meta
