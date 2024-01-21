@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 import { EmptyCart, ProductsItem } from '@/pages'
 import { CartForm } from '@/pages/cart/cartForm'
 import { clearCart } from '@/services/cart'
-import { useAuth } from '@/services/hooks'
 import { setCurrentPage, setFilter } from '@/services/products'
 import { useAppDispatch } from '@/services/store'
 import { ProductInCart } from '@/services/types'
@@ -15,11 +14,11 @@ import s from './cart.module.scss'
 
 type Props = {
   cart: ProductInCart[]
+  isAuth: boolean
   totalSum: number
 }
 
-export const Cart = ({ cart, totalSum }: Props) => {
-  const { isAuth } = useAuth()
+export const Cart = ({ cart, isAuth, totalSum }: Props) => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
