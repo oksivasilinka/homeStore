@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+
 import { AuthForm } from '@/components'
 
 const meta = {
@@ -11,16 +12,16 @@ export default meta
 type Story = StoryObj<typeof meta>
 export const AuthLoginFormStory: Story = {
   args: {
-    title: 'Зарегистрироваться',
     login: true,
+    title: 'Зарегистрироваться',
     titleButton: 'Зарегистрироваться',
   },
 }
 
 export const AuthSignInFormStory: Story = {
   args: {
-    title: 'Войти',
     login: false,
+    title: 'Войти',
     titleButton: 'Войти',
   },
 }

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+
 import TextField from '@mui/material/TextField'
 
 const meta = {
@@ -31,9 +32,9 @@ export const InputPasswordStory: Story = {
 
 export const InputWithErrorStory: Story = {
   args: {
+    error: true,
     label: 'Ваш email',
     name: 'email',
     placeholder: 'Ваш email',
-    error: true,
   },
 }

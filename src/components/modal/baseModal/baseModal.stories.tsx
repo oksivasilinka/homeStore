@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+
 import { BaseModal, ConfirmOrder, InfoConfirm } from '@/components'
 
 const meta = {
@@ -19,16 +20,14 @@ const data = {
 
 export const ModalConfirmOrderStory: Story = {
   args: {
-    isOpen: true,
-    callback: () => {},
     children: <ConfirmOrder callback={() => {}} data={data} />,
+    isOpen: true,
   },
 }
 
 export const ModalInfoConfirmStory: Story = {
   args: {
-    isOpen: true,
-    callback: () => {},
     children: <InfoConfirm callback={() => {}} />,
+    isOpen: true,
   },
 }
