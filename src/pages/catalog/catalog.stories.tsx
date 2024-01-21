@@ -10,7 +10,7 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-export const ProductCardsListStory: Story = {
+export const CatalogStory: Story = {
   args: {
     isAuth: true,
     pageSize: 9,
