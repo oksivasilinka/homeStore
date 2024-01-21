@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 
 import { CategoryFilter } from '@/components'
 import { ProductCard } from '@/pages'
-import { useAuth } from '@/services/hooks'
 import {
   currentPageSelector,
   filterSelector,
@@ -21,11 +20,11 @@ import Typography from '@mui/material/Typography'
 import s from './catalog.module.scss'
 
 type Props = {
+  isAuth: boolean
   pageSize: number
 }
 
-export const Catalog = ({ pageSize }: Props) => {
-  const { isAuth } = useAuth()
+export const Catalog = ({ isAuth, pageSize }: Props) => {
   const products = useSelector(productsSelector)
   const pageCount = useSelector(pageCountSelector)
   const currentPage = useSelector(currentPageSelector)
