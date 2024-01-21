@@ -1,6 +1,5 @@
 import { forwardRef } from 'react'
 import { Control, Controller } from 'react-hook-form'
-
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
@@ -8,7 +7,7 @@ import s from './inpuForm.module.scss'
 
 type Props = {
   autocomplete?: string
-  control: Control<any>
+  control?: Control<any>
   error: string | undefined
   label: string
   name: string
