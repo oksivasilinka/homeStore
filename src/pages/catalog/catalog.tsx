@@ -43,7 +43,7 @@ export const Catalog = ({ isAuth, pageSize }: Props) => {
 
   return (
     <>
-      <Typography className={s.title} variant={'h4'}>
+      <Typography color={'primary'} className={s.title} variant={'h4'}>
         Каталог
       </Typography>
       <div className={s.wrapper}>

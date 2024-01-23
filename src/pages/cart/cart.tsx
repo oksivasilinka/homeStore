@@ -32,7 +32,7 @@ export const Cart = ({ cart, isAuth, totalSum }: Props) => {
 
   return (
     <>
-      <Typography className={s.title} variant={'h4'}>
+      <Typography color={'primary'} className={s.title} variant={'h4'}>
         Корзина
       </Typography>
       <Box className={s.wrapper}>

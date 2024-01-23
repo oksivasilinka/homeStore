@@ -35,7 +35,7 @@ export const ProductCard = ({ product }: Props) => {
           </Typography>
         </>
         <>
-          <Typography className={s.price} variant={'h6'}>
+          <Typography color={'primary'} className={s.price} variant={'h6'}>
             Цена {price} руб.
           </Typography>
           <Button onClick={addProductHandler} variant={'contained'}>
