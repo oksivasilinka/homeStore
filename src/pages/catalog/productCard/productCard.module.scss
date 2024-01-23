@@ -14,10 +14,13 @@
     padding: 20px;
 
     .description,
-    .price,
     .img,
     .name {
       margin-bottom: 10px;
+    }
+
+    .price{
+      margin-bottom: 20px;
     }
 
     .img {
@@ -26,6 +29,9 @@
 
     .name {
       color: #442c2e;
+    }
+    .button {
+      height: 40px;
     }
   }
 }

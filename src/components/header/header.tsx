@@ -38,7 +38,7 @@ export const Header = ({ isAuth, totalSum }: Props) => {
           <Toolbar className={s.toolbar}>
             <NavLink to={'/'}>
               <Button className={s.labelButton} component={'button'} variant={'text'}>
-                Online-store
+                Home-store
               </Button>
             </NavLink>
 

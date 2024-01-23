@@ -26,7 +26,7 @@ export const NumericInput = ({ product }: Props) => {
   }
 
   return (
-    <label title={'Изменить количество'}>
+    <label title={'Изменить количество'} className={s.wrapper}>
       <IconButton
         color={'primary'}
         aria-label={'reduce the number of'}
