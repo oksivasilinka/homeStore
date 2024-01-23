@@ -14,7 +14,7 @@ type Props = {
 export const EmptyCart = ({ link, path, title }: Props) => {
   return (
     <Box className={s.emptyCart}>
-      <Typography variant={'h6'}>{title}</Typography>
+      <Typography variant={'h5'}>{title}</Typography>
       <NavLink to={path}>
         <Typography variant={'body2'}>{link}</Typography>
       </NavLink>

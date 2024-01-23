@@ -20,11 +20,15 @@ export const ProductsItem = ({ product }: Props) => {
       <Box className={s.productInfo}>
         <CardContent className={s.textWrapper}>
           <Box>
-            <Typography variant={'h6'}>{name}</Typography>
+            <Typography color={'primary'} variant={'h5'}>
+              {name}
+            </Typography>
 
             <Typography variant={'subtitle1'}>Цена за 1шт. {price} руб.</Typography>
           </Box>
-          <Typography variant={'h6'}>Сумма {totalSum} руб.</Typography>
+          <Typography color={'primary'} variant={'h6'} className={s.sum}>
+            Сумма: {totalSum} руб.
+          </Typography>
         </CardContent>
         <CardActions className={s.buttonWrapper}>
           <NumericInput product={product} />

@@ -27,7 +27,7 @@ export const ProductCard = ({ product }: Props) => {
         <>
           <CardMedia className={s.img} image={photo} title={name} />
 
-          <Typography className={s.name} variant={'h6'}>
+          <Typography className={s.name} variant={'h5'}>
             {name}
           </Typography>
           <Typography className={s.description} variant={'body2'}>

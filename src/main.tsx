@@ -6,6 +6,10 @@ import { persistor, store } from '@/services/store'
 import ReactDOM from 'react-dom/client'
 import { PersistGate } from 'redux-persist/integration/react'
 
+import '@fontsource/roboto/500.css'
+import '@fontsource/roboto/400.css'
+import '@fontsource/roboto/700.css'
+
 import { App } from './App'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
