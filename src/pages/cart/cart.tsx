@@ -48,7 +48,9 @@ export const Cart = ({ cart, isAuth, totalSum }: Props) => {
             <Box className={s.wrapperProducts}>
               {cart?.map(p => <ProductsItem key={p.name} product={p} />)}
               <Box className={s.wrapperTotal}>
-                <Typography variant={'h5'}>Итого {totalSum || 0} руб.</Typography>
+                <Typography variant={'h5'} color={'primary'}>
+                  Итого {totalSum || 0} руб.
+                </Typography>
                 <Button onClick={clearCardHandler}>Очистить корзину</Button>
               </Box>
             </Box>
