@@ -1,16 +1,13 @@
+import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { auth } from '@/config/firebase'
-import { logout } from '@/services/auth'
-import { setFilter } from '@/services/products'
-import { useAppDispatch } from '@/services/store'
+import { BaseModal, LogoutModal } from '@/components'
 import { Container } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import { signOut } from 'firebase/auth'
 
 import s from './header.module.scss'
 
@@ -19,17 +16,7 @@ type Props = {
   totalSum: number
 }
 export const Header = ({ isAuth, totalSum }: Props) => {
-  const dispatch = useAppDispatch()
-
-  const logoutHandler = async () => {
-    try {
-      await signOut(auth)
-      dispatch(logout())
-      dispatch(setFilter({ filter: 'all' }))
-    } catch (e) {
-      console.log(e)
-    }
-  }
+  const [isOpenModal, setIsOpenModal] = useState(false)
 
   return (
     <Box>
@@ -55,7 +42,10 @@ export const Header = ({ isAuth, totalSum }: Props) => {
                       <Typography>Корзина</Typography>
                     </Button>
                   </NavLink>
-                  <Button onClick={logoutHandler}>Выйти</Button>
+                  <Button onClick={() => setIsOpenModal(true)}>Выйти</Button>
+                  <BaseModal isOpen={isOpenModal}>
+                    <LogoutModal setIsOpenModal={setIsOpenModal} />
+                  </BaseModal>
                 </>
               )}
             </Box>
