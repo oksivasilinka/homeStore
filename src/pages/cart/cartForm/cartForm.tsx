@@ -90,6 +90,7 @@ export const CartForm = ({ clearCardHandler, totalSum }: Props) => {
           label={'Ваш телефон'}
           name={'phone'}
           placeholder={'Телефон'}
+          type={'phone'}
         />
         <Button type={'submit'} variant={'contained'}>
           Оформить заказ

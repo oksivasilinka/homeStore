@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
 import { Control, Controller } from 'react-hook-form'
+import { IMaskInput } from 'react-imask'
 
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
@@ -18,6 +19,8 @@ type Props = {
 
 export const ItemForm = forwardRef<HTMLInputElement, Props>(
   ({ autocomplete, control, error, label, name, placeholder, type }, ref) => {
+    const isPhoneInput = type === 'phone'
+
     return (
       <div className={s.itemForm}>
         <Controller
@@ -25,16 +28,37 @@ export const ItemForm = forwardRef<HTMLInputElement, Props>(
           defaultValue={''}
           name={name}
           render={({ field }) => (
-            <TextField
-              {...field}
-              autoComplete={autocomplete}
-              error={!!error}
-              label={label}
-              placeholder={placeholder}
-              ref={ref}
-              size={'small'}
-              type={type}
-            />
+            <>
+              {!isPhoneInput && (
+                <TextField
+                  {...field}
+                  autoComplete={autocomplete}
+                  error={!!error}
+                  label={label}
+                  placeholder={placeholder}
+                  ref={ref}
+                  size={'small'}
+                  type={type}
+                />
+              )}
+
+              {isPhoneInput && (
+                <IMaskInput
+                  className={s.phoneInput}
+                  {...field}
+                  autoComplete={autocomplete}
+                  definitions={{
+                    '#': /[1-9]/,
+                  }}
+                  id={'phone-input'}
+                  inputRef={ref}
+                  label={label}
+                  mask={'+000(00) 000-00-00'}
+                  overwrite
+                  placeholder={placeholder}
+                />
+              )}
+            </>
           )}
         />
         {error && (
