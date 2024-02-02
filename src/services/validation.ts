@@ -1,6 +1,6 @@
 import { object, ref, string } from 'yup'
 
-const phoneRegExp = /[0-9]/
+const phoneRegExp = /^\+\d{3}\(\d{2}\) \d{3}-\d{2}-\d{2}$/
 
 const emailSchema = string()
   .required('Поле обязательно для заполнения')

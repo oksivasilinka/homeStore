@@ -19,8 +19,6 @@ type Props = {
 
 export const ItemForm = forwardRef<HTMLInputElement, Props>(
   ({ autocomplete, control, error, label, name, placeholder, type }, ref) => {
-    const isPhoneInput = type === 'phone'
-
     return (
       <div className={s.itemForm}>
         <Controller
@@ -28,37 +26,26 @@ export const ItemForm = forwardRef<HTMLInputElement, Props>(
           defaultValue={''}
           name={name}
           render={({ field }) => (
-            <>
-              {!isPhoneInput && (
-                <TextField
-                  {...field}
-                  autoComplete={autocomplete}
-                  error={!!error}
-                  label={label}
-                  placeholder={placeholder}
-                  ref={ref}
-                  size={'small'}
-                  type={type}
-                />
-              )}
-
-              {isPhoneInput && (
-                <IMaskInput
-                  className={s.phoneInput}
-                  {...field}
-                  autoComplete={autocomplete}
-                  definitions={{
-                    '#': /[1-9]/,
-                  }}
-                  id={'phone-input'}
-                  inputRef={ref}
-                  label={label}
-                  mask={'+000(00) 000-00-00'}
-                  overwrite
-                  placeholder={placeholder}
-                />
-              )}
-            </>
+            <TextField
+              {...field}
+              InputProps={{
+                inputComponent: IMaskInputWrapper,
+                inputProps: {
+                  autoComplete: autocomplete,
+                  mask: type === 'phone' ? '+000(00) 000-00-00' : undefined,
+                },
+              }}
+              autoComplete={autocomplete}
+              error={!!error}
+              label={label}
+              onChange={e => {
+                field.onChange(e.target.value)
+              }}
+              placeholder={placeholder}
+              ref={ref}
+              size={'small'}
+              type={type}
+            />
           )}
         />
         {error && (
@@ -70,3 +57,7 @@ export const ItemForm = forwardRef<HTMLInputElement, Props>(
     )
   }
 )
+
+const IMaskInputWrapper = forwardRef<HTMLInputElement, any>((props, ref) => {
+  return <IMaskInput {...props} inputRef={ref} maskchar={null} />
+})
