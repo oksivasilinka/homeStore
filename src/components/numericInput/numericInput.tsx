@@ -26,18 +26,18 @@ export const NumericInput = ({ product }: Props) => {
   }
 
   return (
-    <label title={'Изменить количество'} className={s.wrapper}>
+    <label className={s.wrapper} title={'Изменить количество'}>
       <IconButton
-        color={'primary'}
         aria-label={'reduce the number of'}
+        color={'primary'}
         onClick={deleteProductHandler}
       >
         <RemoveIcon />
       </IconButton>
       <TextField className={s.input} size={'small'} value={productCount} />
       <IconButton
-        color={'primary'}
         aria-label={'Increase the number of'}
+        color={'primary'}
         onClick={addProductHandler}
       >
         <AddIcon />

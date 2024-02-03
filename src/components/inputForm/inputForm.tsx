@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
 import { Control, Controller } from 'react-hook-form'
+import { IMaskInput } from 'react-imask'
 
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
@@ -27,9 +28,19 @@ export const ItemForm = forwardRef<HTMLInputElement, Props>(
           render={({ field }) => (
             <TextField
               {...field}
+              InputProps={{
+                inputComponent: IMaskInputWrapper,
+                inputProps: {
+                  autoComplete: autocomplete,
+                  mask: type === 'phone' ? '+000(00) 000-00-00' : undefined,
+                },
+              }}
               autoComplete={autocomplete}
               error={!!error}
               label={label}
+              onChange={e => {
+                field.onChange(e.target.value)
+              }}
               placeholder={placeholder}
               ref={ref}
               size={'small'}
@@ -46,3 +57,7 @@ export const ItemForm = forwardRef<HTMLInputElement, Props>(
     )
   }
 )
+
+const IMaskInputWrapper = forwardRef<HTMLInputElement, any>((props, ref) => {
+  return <IMaskInput {...props} inputRef={ref} maskchar={null} />
+})
