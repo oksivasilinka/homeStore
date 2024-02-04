@@ -42,3 +42,5 @@ export type AuthBaseData = {
   id: string
   token: string
 }
+
+export type Status = 'idle' | 'loading'
