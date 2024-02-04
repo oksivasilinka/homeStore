@@ -1,4 +1,5 @@
 import { db } from '@/config/firebase'
+import { setStatus } from '@/services/app'
 import { Category, ProductInCart } from '@/services/types'
 import { firebaseErrorHandler } from '@/services/utils'
 import { createAppAsyncThunk } from '@/services/utils/createAppAsyncThunk'
@@ -41,6 +42,7 @@ const getProducts = createAppAsyncThunk<
 >(
   'products/getProducts',
   async ({ currentPage, filter, pageSize }, { dispatch, rejectWithValue }) => {
+    dispatch(setStatus({ status: 'loading' }))
     try {
       const productsCollectionRef = collection(db, 'product')
       const data = await getDocs(productsCollectionRef)
@@ -60,10 +62,13 @@ const getProducts = createAppAsyncThunk<
         currentPage
       )
 
+      dispatch(setStatus({ status: 'idle' }))
+
       return { currentPage: updatedCurrentPage, pageCount, products: productsInPage }
     } catch (e) {
       firebaseErrorHandler(e, dispatch)
     }
+    dispatch(setStatus({ status: 'idle' }))
 
     return rejectWithValue(null)
   }
